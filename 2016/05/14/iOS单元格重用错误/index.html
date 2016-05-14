@@ -11,15 +11,18 @@
     
 
     
-    <meta name="description">
-<meta property="og:type" content="website">
+    <meta name="description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及其实这两个方法的作用都一样，都是重用单元格，将缓存">
+<meta property="og:type" content="article">
 <meta property="og:title" content="大脸儿">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/05/14/iOS单元格重用错误/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description">
+<meta property="og:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及其实这两个方法的作用都一样，都是重用单元格，将缓存">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-05-14T06:37:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大脸儿">
-<meta name="twitter:description">
+<meta name="twitter:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及其实这两个方法的作用都一样，都是重用单元格，将缓存">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
     
     <link rel="alternative" href="/atom.xml" title="大脸儿" type="application/atom+xml">
@@ -75,12 +78,10 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
   <h1 itemprop="name">
     
       <a href="/2016/05/14/iOS单元格重用错误/" title="" itemprop="url"></a>
@@ -94,76 +95,20 @@
     
   </p>
 </header>
-    <div class="article-content">
-        
-        <h4 id="常用的重用单元格的方法："><a href="#常用的重用单元格的方法：" class="headerlink" title="常用的重用单元格的方法："></a>常用的重用单元格的方法：</h4><p>1.dequeueReusableCellWithIdentifier:forIndexPath:<br>2.dequeueReusableCellWithIdentifier:<br>相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及<br><img src="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="apple官方文档截图.png"><br>其实这两个方法的作用都一样，都是重用单元格，将缓存池中的单元格进行再利用，如果缓存池为空的话，都会调用tableViewCell的初始化方法或者加载nib文件加载新的cell。</p>
-<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>下次如果你的Xcode抛出了must register a nib or a class for the identifier or connect a prototype cell in a storyboard这样的错误，查看一下是不是自己是纯代码的方式创建tableView，如果是那就是有可能你直接调用了第一个方法吧，修改为调用第二个方法就好了。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/05/14/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="dalianer" target="_blank" itemprop="author">dalianer</a>
+	<div class="article-content">
 		
-  <p class="article-time">
-    <time datetime="2016-05-14T04:35:16.000Z" itemprop="datePublished"> Published 2016-05-14</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用的重用单元格的方法："><span class="toc-number">1.</span> <span class="toc-text">常用的重用单元格的方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结论"><span class="toc-number">2.</span> <span class="toc-text">结论</span></a></li></ol>
+		
+		</div>
+		
+		<h4 id="常用的重用单元格的方法："><a href="#常用的重用单元格的方法：" class="headerlink" title="常用的重用单元格的方法："></a>常用的重用单元格的方法：</h4><p>1.dequeueReusableCellWithIdentifier:forIndexPath:<br>2.dequeueReusableCellWithIdentifier:<br>相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及<br><img src="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="apple官方文档截图.png"><br>其实这两个方法的作用都一样，都是重用单元格，将缓存池中的单元格进行再利用，如果缓存池为空的话，都会调用tableViewCell的初始化方法或者加载nib文件加载新的cell。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>下次如果你的Xcode抛出了must register a nib or a class for the identifier or connect a prototype cell in a storyboard这样的错误，查看一下是不是自己是纯代码的方式创建tableView，如果是那就是有可能你直接调用了第一个方法吧，修改为调用第二个方法就好了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 
@@ -171,24 +116,43 @@
 
 
 
-
-<div class="comments-count">
+	<div class="article-share" id="share">
 	
-</div>
+	  <div data-url="http://yoursite.com/2016/05/14/iOS单元格重用错误/" data-title="大脸儿" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
 
 </footer>
 
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
 
-    </article>
-
-
-
-
-
-
-
+<div class="next">
+<a href="/2016/05/14/hello-world/"  title="Hello World">
+ <strong>下一篇：</strong><br/> 
+ <span>Hello World
+</span>
+</a>
 </div>
+
+</nav>
+
+	
+
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用的重用单元格的方法："><span class="toc-number">1.</span> <span class="toc-text">常用的重用单元格的方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结论"><span class="toc-number">2.</span> <span class="toc-text">结论</span></a></li></ol>
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
@@ -320,12 +284,89 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
@@ -396,4 +437,4 @@ var _hmt = _hmt || [];
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
