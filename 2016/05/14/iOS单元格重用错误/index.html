@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -84,17 +84,17 @@
 
 
 
-<meta name="description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及其实这两个方法的作用都一样，都是重用单元格，将缓存">
+<meta name="description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及:其实这两个方法的作用都一样，都是重用单元格，将缓">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大脸儿">
+<meta property="og:title" content="iOS单元格重用错误">
 <meta property="og:url" content="http://yoursite.com/2016/05/14/iOS单元格重用错误/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及其实这两个方法的作用都一样，都是重用单元格，将缓存">
+<meta property="og:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及:其实这两个方法的作用都一样，都是重用单元格，将缓">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-05-14T06:37:44.000Z">
+<meta property="og:updated_time" content="2016-05-14T07:18:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大脸儿">
-<meta name="twitter:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及其实这两个方法的作用都一样，都是重用单元格，将缓存">
+<meta name="twitter:title" content="iOS单元格重用错误">
+<meta name="twitter:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及:其实这两个方法的作用都一样，都是重用单元格，将缓">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -102,7 +102,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Muse',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -113,7 +113,7 @@
   };
 </script>
 
-  <title>  | 大脸儿 </title>
+  <title> iOS单元格重用错误 | 大脸儿 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -169,17 +169,29 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
           </a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -188,8 +200,6 @@
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -233,7 +243,7 @@
             
             
               
-                
+                iOS单元格重用错误
               
             
           </h1>
@@ -273,8 +283,8 @@
       
 
       
-        <h4 id="常用的重用单元格的方法："><a href="#常用的重用单元格的方法：" class="headerlink" title="常用的重用单元格的方法："></a>常用的重用单元格的方法：</h4><p>1.dequeueReusableCellWithIdentifier:forIndexPath:<br>2.dequeueReusableCellWithIdentifier:<br>相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及<br><img src="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="apple官方文档截图.png"><br>其实这两个方法的作用都一样，都是重用单元格，将缓存池中的单元格进行再利用，如果缓存池为空的话，都会调用tableViewCell的初始化方法或者加载nib文件加载新的cell。</p>
-<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>下次如果你的Xcode抛出了must register a nib or a class for the identifier or connect a prototype cell in a storyboard这样的错误，查看一下是不是自己是纯代码的方式创建tableView，如果是那就是有可能你直接调用了第一个方法吧，修改为调用第二个方法就好了。</p>
+        <h2 id="常用的重用单元格的方法："><a href="#常用的重用单元格的方法：" class="headerlink" title="常用的重用单元格的方法："></a>常用的重用单元格的方法：</h2><p>1.dequeueReusableCellWithIdentifier:forIndexPath:<br>2.dequeueReusableCellWithIdentifier:<br>相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及:<br><img src="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="apple官方文档截图.png"><br>其实这两个方法的作用都一样，都是重用单元格，将缓存池中的单元格进行再利用，如果缓存池为空的话，都会调用tableViewCell的初始化方法或者加载nib文件加载新的cell。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>下次如果你的Xcode抛出了must register a nib or a class for the identifier or connect a prototype cell in a storyboard这样的错误，查看一下是不是自己是纯代码的方式创建tableView，如果是那就是有可能你直接调用了第一个方法吧，修改为调用第二个方法就好了。</p>
 
       
     </div>
@@ -354,7 +364,7 @@
                src="/images/avatar.gif"
                alt="dalianer" />
           <p class="site-author-name" itemprop="name">dalianer</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">大脸儿成长记录</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
@@ -391,7 +401,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的重用单元格的方法："><span class="nav-number">1.</span> <span class="nav-text">常用的重用单元格的方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结论"><span class="nav-number">2.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的重用单元格的方法："><span class="nav-number">1.</span> <span class="nav-text">常用的重用单元格的方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">2.</span> <span class="nav-text">结论</span></a></li></ol></div>
             
           </div>
         </section>
@@ -424,7 +434,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Mist
   </a>
 </div>
 
