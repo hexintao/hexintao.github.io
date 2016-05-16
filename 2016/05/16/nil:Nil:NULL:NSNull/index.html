@@ -84,18 +84,22 @@
 
 
 
-<meta name="description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:">
+<meta name="description" content="原文地址：http://nshipster.com/nil/
+原文作者：Mattt Thompson
+引子“虚无”是一个偏哲学的概念，但是理解“虚无”又是一项比较实际的事情。我们是物质世界的一份子，却一直努力用逻辑思维去理解宇宙中存在的种种未知。计算机，作为一个逻辑系统的实体代表，同样也面临着一个棘手的问题－－如何用“有”来定义“无”？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS单元格重用错误">
-<meta property="og:url" content="http://yoursite.com/2016/05/14/iOS单元格重用错误/index.html">
+<meta property="og:title" content="［翻译］nil/Nil/NULL/NSNull">
+<meta property="og:url" content="http://yoursite.com/2016/05/16/nil:Nil:NULL:NSNull/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-05-14T16:18:22.000Z">
+<meta property="og:description" content="原文地址：http://nshipster.com/nil/
+原文作者：Mattt Thompson
+引子“虚无”是一个偏哲学的概念，但是理解“虚无”又是一项比较实际的事情。我们是物质世界的一份子，却一直努力用逻辑思维去理解宇宙中存在的种种未知。计算机，作为一个逻辑系统的实体代表，同样也面临着一个棘手的问题－－如何用“有”来定义“无”？">
+<meta property="og:updated_time" content="2016-05-16T03:48:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS单元格重用错误">
-<meta name="twitter:description" content="常用的重用单元格的方法：1.dequeueReusableCellWithIdentifier:forIndexPath:2.dequeueReusableCellWithIdentifier:">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="［翻译］nil/Nil/NULL/NSNull">
+<meta name="twitter:description" content="原文地址：http://nshipster.com/nil/
+原文作者：Mattt Thompson
+引子“虚无”是一个偏哲学的概念，但是理解“虚无”又是一项比较实际的事情。我们是物质世界的一份子，却一直努力用逻辑思维去理解宇宙中存在的种种未知。计算机，作为一个逻辑系统的实体代表，同样也面临着一个棘手的问题－－如何用“有”来定义“无”？">
 
 
 
@@ -113,7 +117,7 @@
   };
 </script>
 
-  <title> iOS单元格重用错误 | 大脸儿 </title>
+  <title> ［翻译］nil/Nil/NULL/NSNull | 大脸儿 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -245,7 +249,7 @@
             
             
               
-                iOS单元格重用错误
+                ［翻译］nil/Nil/NULL/NSNull
               
             
           </h1>
@@ -257,8 +261,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-14T14:36:26+08:00" content="2016-05-14">
-              2016-05-14
+            <time itemprop="dateCreated" datetime="2016-05-16T11:40:49+08:00" content="2016-05-16">
+              2016-05-16
             </time>
           </span>
 
@@ -268,8 +272,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/14/iOS单元格重用错误/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/14/iOS单元格重用错误/" itemprop="commentsCount"></span>
+                <a href="/2016/05/16/nil:Nil:NULL:NSNull/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/16/nil:Nil:NULL:NSNull/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -279,7 +283,7 @@
 
           
           
-             <span id="/2016/05/14/iOS单元格重用错误/" class="leancloud_visitors" data-flag-title="iOS单元格重用错误">
+             <span id="/2016/05/16/nil:Nil:NULL:NSNull/" class="leancloud_visitors" data-flag-title="［翻译］nil/Nil/NULL/NSNull">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -301,8 +305,51 @@
       
 
       
-        <h2 id="常用的重用单元格的方法："><a href="#常用的重用单元格的方法：" class="headerlink" title="常用的重用单元格的方法："></a>常用的重用单元格的方法：</h2><p>1.dequeueReusableCellWithIdentifier:forIndexPath:<br>2.dequeueReusableCellWithIdentifier:<br><a id="more"></a><br>相比起来应该是第一个更为常用，但其实当我们在用纯代码的方式创建一个列表的时候，我们首先调用的应该是第二个方法，对单元格进行注册，这在苹果的官方文档中也有提及:<br><img src="http://upload-images.jianshu.io/upload_images/1659311-178d87002ecba3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="apple官方文档截图.png"><br>其实这两个方法的作用都一样，都是重用单元格，将缓存池中的单元格进行再利用，如果缓存池为空的话，都会调用tableViewCell的初始化方法或者加载nib文件加载新的cell。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>下次如果你的Xcode抛出了must register a nib or a class for the identifier or connect a prototype cell in a storyboard这样的错误，查看一下是不是自己是纯代码的方式创建tableView，如果是那就是有可能你直接调用了第一个方法吧，修改为调用第二个方法就好了。</p>
+        <p><strong>原文地址：</strong><a href="http://nshipster.com/nil/" target="_blank" rel="external">http://nshipster.com/nil/</a></p>
+<p><strong>原文作者：</strong><a href="http://nshipster.com/authors/mattt-thompson/" target="_blank" rel="external">Mattt Thompson</a></p>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>“虚无”是一个偏哲学的概念，但是理解“虚无”又是一项比较实际的事情。我们是物质世界的一份子，却一直努力用逻辑思维去理解宇宙中存在的种种未知。计算机，作为一个逻辑系统的实体代表，同样也面临着一个棘手的问题－－如何用“有”来定义“无”？<br><a id="more"></a></p>
+<p>在OC中，“空值”有好几种定义。为什么会有多种定义方式呢？想要回答这个问题，就不得不回到之前的<a href="http://nshipster.com/ns_enum-ns_options/" target="_blank" rel="external">老套路</a>－－OC是如何将C（程序式语言）和类Smalltalk（面向对象语言）连接起来？C语言中，“0”就代表着“空值”，<code>NULL</code>代表指针为空（含义即指针的内容为0）。</p>
+<p>OC在C语言的基础上，增加了一个“空值”的定义——<code>nil</code>。<code>nil</code>的含义是一个对象的指针为空。虽然nil和NULL语义上有所区别，但本质上两者是等同的。</p>
+<p>从框架的角度来说，Foundation框架定义了<code>NSNull</code>和一个类方法<code>+null</code>，而后者的返回值就是一个<code>NSNull</code>对象。<code>NSNull</code>和<code>nil</code>、<code>NULL</code>的区别在于：前者是一个实际存在的对象，而不是仅仅定义值为空。另外在Foundation/NSObjectRuntime.h中定义：<code>Nil</code>代表一个类指针为空。这个与<code>nil</code>只在大小写上有所区别却鲜为人知的<code>Nil</code>并不经常使用，不过它也是“空值”的一个定义。</p>
+<h2 id="关于nil的一些东西"><a href="#关于nil的一些东西" class="headerlink" title="关于nil的一些东西"></a>关于nil的一些东西</h2><p>OC对象通过<code>-alloc</code>方法开辟新内存，开始自己生命的旅程。一个对象的内容被初始为0，这意味着这个对象内部的所有指针都为<code>nil</code>。所以，在类的实例化方法中（<code>-init</code>），并不需要再重新执行<code>self.(association) = nil</code>类似的过程。</p>
+<p>nil最被人熟知的一点是：尽管本身为空，但它却能从外界接收消息。</p>
+<p>其他语言中，像C++，让一个空值调用方法会导致系统崩溃，但是在OC中，给<code>nil</code>发送消息的后果仅仅是返回一个0。这大大简化了程序的编写，因为不需要在执行方法前再检查对象是否为nil：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 举例来说，类似于这种判断语句...</span><br><span class="line">if (name != nil &amp;&amp; [name isEqualToString:@&quot;Steve&quot;]) &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">// ...可以被简化为:</span><br><span class="line">if ([name isEqualToString:@&quot;Steve&quot;]) &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p>在了解了nil的工作原理之后，OC语言允许我们这样简化代码，这也成了OC语言的一个特征，而且这种简化操作并不会给我们的应用造成潜在的bug。不过，我们得留意某些情况下值不允许为nil，这时候，我们就需要提前检查并做出错误提示或者通过增加<code>NSParameterAssert</code>抛出异常进行提示。</p>
+<h2 id="NSNull：“有”定义“无”"><a href="#NSNull：“有”定义“无”" class="headerlink" title="NSNull：“有”定义“无”"></a>NSNull：“有”定义“无”</h2><p>NSNull在Foundation和其他一些框架中被大量使用，它被用来判断在一些集合类的对象，例如NSArray、NSDictionary中，不能含有nil。你可以把NSNull看作是一个装有NULL或nil值的箱子，就像下边这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSMutableDictionary *mutableDictionary = [NSMutableDictionary dictionary];</span><br><span class="line">mutableDictionary[@&quot;someKey&quot;] = [NSNull null]; // 给 `someKey`的值设为null空对象</span><br><span class="line">NSLog(@&quot;Keys: %@&quot;, [mutableDictionary allKeys]); // @[@&quot;someKey&quot;]</span><br></pre></td></tr></table></figure>
+<p>总的来说，有以下4种“空值”的定义方式需要每一个OC编程人员知道：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NULL</td>
+<td>(void *)0</td>
+<td>C语言，指针为空</td>
+</tr>
+<tr>
+<td>nil</td>
+<td>(id)0</td>
+<td>OC语言，对象为空</td>
+</tr>
+<tr>
+<td>Nil</td>
+<td>(class)0</td>
+<td>OC语言，类为空</td>
+</tr>
+<tr>
+<td>NSNull</td>
+<td>[NSNull null]</td>
+<td>OC语言，代表一个null对象</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -327,17 +374,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/14/GitPages搭建博客/" rel="next" title="GitPages搭建自己的博客并绑定域名">
-                <i class="fa fa-chevron-left"></i> GitPages搭建自己的博客并绑定域名
+              <a href="/2016/05/14/iOS单元格重用错误/" rel="next" title="iOS单元格重用错误">
+                <i class="fa fa-chevron-left"></i> iOS单元格重用错误
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/16/nil:Nil:NULL:NSNull/" rel="prev" title="［翻译］nil/Nil/NULL/NSNull">
-                ［翻译］nil/Nil/NULL/NSNull <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -363,8 +406,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/14/iOS单元格重用错误/"
-           data-title="iOS单元格重用错误" data-url="http://yoursite.com/2016/05/14/iOS单元格重用错误/">
+      <div class="ds-thread" data-thread-key="2016/05/16/nil:Nil:NULL:NSNull/"
+           data-title="［翻译］nil/Nil/NULL/NSNull" data-url="http://yoursite.com/2016/05/16/nil:Nil:NULL:NSNull/">
       </div>
     
   </div>
@@ -451,7 +494,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的重用单元格的方法："><span class="nav-number">1.</span> <span class="nav-text">常用的重用单元格的方法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">2.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于nil的一些东西"><span class="nav-number">2.</span> <span class="nav-text">关于nil的一些东西</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSNull：“有”定义“无”"><span class="nav-number">3.</span> <span class="nav-text">NSNull：“有”定义“无”</span></a></li></ol></div>
             
           </div>
         </section>
