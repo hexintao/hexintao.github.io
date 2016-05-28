@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/05/28/iOS%E8%87%AA%E5%AE%9A%E4%B9%89UIPageControl/</loc>
+    <lastmod>2016-05-28T04:11:56.000Z</lastmod>
+    <data>
+        <display>
+        <title>iOS自定义UIPageControl</title>
+        <pubTime>2016-05-28T03:45:57.000Z</pubTime>
+        
+        <tag>iOS开发</tag>
+         
+        <tag>Objective-C</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS开发" url="http://yoursite.com/categories/iOS-Development/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/05/24/nil:Nil:NULL:NSNull/</loc>
     <lastmod>2016-05-27T12:35:29.000Z</lastmod>
     <data>
@@ -13,11 +35,11 @@
         
         <tag>Objective-C</tag>
          
+        <tag>翻译</tag>
+         
         <tag>iOS</tag>
          
         <tag>开发</tag>
-         
-        <tag>翻译</tag>
          
          
            
@@ -61,9 +83,9 @@
         <title>iOS图片无限循环</title>
         <pubTime>2016-05-27T05:25:06.000Z</pubTime>
         
-        <tag>Objective-C</tag>
-         
         <tag>iOS开发</tag>
+         
+        <tag>Objective-C</tag>
          
          
            
@@ -85,11 +107,11 @@
         
         <tag>Objective-C</tag>
          
+        <tag>翻译</tag>
+         
         <tag>iOS</tag>
          
         <tag>开发</tag>
-         
-        <tag>翻译</tag>
          
          
            
