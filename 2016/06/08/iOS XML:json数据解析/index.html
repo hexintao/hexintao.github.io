@@ -1,0 +1,792 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="引子数据解析在iOS开发中是不可或缺的一环，从服务器获取到的数据，就目前来说无非就是XML和json两种。今天我就来总结一下iOS平台下，常用的几种解析数据的方法及步骤。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS XML/json数据解析">
+<meta property="og:url" content="http://yoursite.com/2016/06/08/iOS XML:json数据解析/index.html">
+<meta property="og:site_name" content="大脸儿">
+<meta property="og:description" content="引子数据解析在iOS开发中是不可或缺的一环，从服务器获取到的数据，就目前来说无非就是XML和json两种。今天我就来总结一下iOS平台下，常用的几种解析数据的方法及步骤。">
+<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/foundCharachter%E5%A4%9A%E6%AC%A1%E6%89%A7%E8%A1%8C.png">
+<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/06-18GDataXML%E9%94%99%E8%AF%AF.png">
+<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/06-18GDataXML1.png">
+<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/06-18GDataXML2.png">
+<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/06-18JSONKit%E9%94%99%E8%AF%AF.png">
+<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/06-18JSONKit%E9%94%99%E8%AF%AF%E4%BF%AE%E5%A4%8D.png">
+<meta property="og:updated_time" content="2016-06-20T10:11:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS XML/json数据解析">
+<meta name="twitter:description" content="引子数据解析在iOS开发中是不可或缺的一环，从服务器获取到的数据，就目前来说无非就是XML和json两种。今天我就来总结一下iOS平台下，常用的几种解析数据的方法及步骤。">
+<meta name="twitter:image" content="http://o8pgspaft.bkt.clouddn.com/foundCharachter%E5%A4%9A%E6%AC%A1%E6%89%A7%E8%A1%8C.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6284716645889869000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> iOS XML/json数据解析 | 大脸儿 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3188724465a6f7695bd8b4ae49fbe857";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">大脸儿</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">hexintao</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS XML/json数据解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-08T13:25:29+08:00" content="2016-06-08">
+              2016-06-08
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/08/iOS XML:json数据解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/08/iOS XML:json数据解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/08/iOS XML:json数据解析/" class="leancloud_visitors" data-flag-title="iOS XML/json数据解析">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>数据解析在iOS开发中是不可或缺的一环，从服务器获取到的数据，就目前来说无非就是XML和json两种。今天我就来总结一下iOS平台下，常用的几种解析数据的方法及步骤。<br><a id="more"></a></p>
+<h2 id="XML文件解析"><a href="#XML文件解析" class="headerlink" title="XML文件解析"></a>XML文件解析</h2><p>关于XML文档格式，这里不再赘述。<a href="http://baike.baidu.com/view/159832.htm?fromtitle=xml&amp;fromid=86251&amp;type=syn" target="_blank" rel="external">XML百科介绍</a>，<a href="http://www.runoob.com/xml/xml-tutorial.html" target="_blank" rel="external">XML菜鸟学习。</a>  关于XML解析，大致有两种方式：  </p>
+<ol>
+<li>SAX（Simple API for XML）：事件驱动机制。从根元素开始，按顺序一个个元素往下解析，它只在XML文档中查找特定条件的内容，并且只提取需要的东西，占用内存少，也比较灵活，所以适合解析大文件。  </li>
+<li>DOM（Document Object Model）：文档对象模型。一次性将整个XML文档加载进内存，放在一个树型结构中，需要的时候查找特定节点。实现简单，读写平衡，但是比较占内存，适合解析小文件。  </li>
+<li>这里我使用的XML例子如下：（中间很长的一坨只是为了说明自带的解析器并不会一下子把节点之间的所有字符串给解析完）。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">Books</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Book</span> <span class="attr">id</span>=<span class="string">"1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>月亮与六便士<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">author</span>&gt;</span>毛姆<span class="tag">&lt;/<span class="name">author</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">summary</span>&gt;</span>上帝的磨盘磨得很慢，却磨得很细上帝的磨盘磨得</span><br><span class="line">        很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很细上帝的磨盘</span><br><span class="line">        磨得很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很细上帝的</span><br><span class="line">        磨盘磨得很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很细上</span><br><span class="line">        帝的磨盘磨得很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很</span><br><span class="line">        细<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Book</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Book</span> <span class="attr">id</span>=<span class="string">"2"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>岛上书店<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">author</span>&gt;</span>加布瑞埃拉·泽文<span class="tag">&lt;/<span class="name">author</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">summary</span>&gt;</span>小岛上书店的老板和他的书店<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Book</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Book</span> <span class="attr">id</span>=<span class="string">"3"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>白夜行<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">author</span>&gt;</span>东野圭吾<span class="tag">&lt;/<span class="name">author</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">summary</span>&gt;</span>畸形但却最深沉的爱情<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Book</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">Books</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="NSXMLParser解析"><a href="#NSXMLParser解析" class="headerlink" title="NSXMLParser解析"></a>NSXMLParser解析</h3><p><code>NSXMLParser</code>是iOS系统自带的解析类，属于SAX解析方式，在解析到每个元素的时候会通知代理，所以使用<code>NSXMLParser</code>必须遵守它的代理协议。</p>
+<h4 id="1-使用步骤："><a href="#1-使用步骤：" class="headerlink" title="1. 使用步骤："></a>1. 使用步骤：</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1. 创建XML解析器</span></span><br><span class="line"><span class="built_in">NSXMLParser</span> *parser = [[<span class="built_in">NSXMLParser</span> alloc]initWithData:<span class="keyword">self</span>.xmlData];</span><br><span class="line"><span class="comment">//2. 设置解析器的代理</span></span><br><span class="line">parser.delegate = <span class="keyword">self</span>;</span><br><span class="line"><span class="comment">//3. 开始解析</span></span><br><span class="line">[parser parse];</span><br></pre></td></tr></table></figure>
+<h4 id="2-代理方法"><a href="#2-代理方法" class="headerlink" title="2. 代理方法"></a>2. 代理方法</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 打开文档，准备解析，一般在这里边用来将保存数据的数组暂时清空</span></span><br><span class="line">- (<span class="keyword">void</span>)parserDidStartDocument:(<span class="built_in">NSXMLParser</span> *)parser;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2. 发现节点。一般在这里主要进行数据模型的初始化和读取节点的属性值</span></span><br><span class="line">- (<span class="keyword">void</span>)parser:(<span class="built_in">NSXMLParser</span> *)parser didStartElement:(<span class="built_in">NSString</span> *)elementName</span><br><span class="line">                                        namespaceURI:(<span class="built_in">NSString</span> *)namespaceURI</span><br><span class="line">                                       qualifiedName:(<span class="built_in">NSString</span> *)qName</span><br><span class="line">                                          attributes:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *,<span class="built_in">NSString</span> *&gt; *)attributeDict</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//节点的属性值是以字典的形式传递进来的，所以取的时候也按字典的读取方法取出来就行</span></span><br><span class="line">	<span class="keyword">self</span>.book.bookID = [attributeDict[<span class="string">@"id"</span>] integerValue];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//在准备开始解析下一个节点的数据时，先把数据清空</span></span><br><span class="line">    [<span class="keyword">self</span>.elementString setString:<span class="string">@""</span>];</span><br><span class="line">&#125;                                       </span><br><span class="line">                                          </span><br><span class="line"><span class="comment">//3. 解析节点之间的字符。 当解析器找到开始标记和结束标记之间的字符时，调用这个方法解析当前节点内的所有字符</span></span><br><span class="line">- (<span class="keyword">void</span>)parser:(<span class="built_in">NSXMLParser</span> *)parser foundCharacters:(<span class="built_in">NSString</span> *)string</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//将一个节点中读取到的数据进行拼接</span></span><br><span class="line">    [<span class="keyword">self</span>.elementString appendString:string];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//4. 节点解析结束，在这个方法里通常进行数据的保存</span></span><br><span class="line">- (<span class="keyword">void</span>)parser:(<span class="built_in">NSXMLParser</span> *)parser didEndElement:(<span class="built_in">NSString</span> *)elementName</span><br><span class="line">                                      namespaceURI:(<span class="built_in">NSString</span> *)namespaceURI</span><br><span class="line">                                     qualifiedName:(<span class="built_in">NSString</span> *)qName</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//如果遇到了结束节点符号,则进行数据的保存</span></span><br><span class="line">    <span class="keyword">if</span> ([elementName isEqualToString:<span class="string">@"Book"</span>]) </span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="keyword">self</span>.books addObject:<span class="keyword">self</span>.book];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//如果既不是数据的最后一个节点，也不是根节点，即为数据中间的节点，则将数据对应保存到模型中</span></span><br><span class="line">    <span class="comment">//运用KVC保存，效率高，不过属性的名字一定要和节点的名称相对应</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(![elementName isEqualToString:<span class="string">@"Books"</span>])</span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="keyword">self</span>.book setValue:<span class="keyword">self</span>.elementString forKey:elementName];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//如果节点较少，也可以通过下边这种手动赋值的方式</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ([elementName isEqualToString:<span class="string">@"title"</span>])</span><br><span class="line">    &#123;</span><br><span class="line">       <span class="keyword">self</span>.book.title = <span class="keyword">self</span>.elementString;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;   </span><br><span class="line">                                 </span><br><span class="line"><span class="comment">//5. 文档解析结束，可以把数据传递给主线程，进行相关的UI更新</span></span><br><span class="line">- (<span class="keyword">void</span>)parserDidEndDocument:(<span class="built_in">NSXMLParser</span> *)parser</span><br></pre></td></tr></table></figure>
+<p>系统多次解析的情况：<br><img src="http://o8pgspaft.bkt.clouddn.com/foundCharachter%E5%A4%9A%E6%AC%A1%E6%89%A7%E8%A1%8C.png" alt=""><br>这也是为什么要在第3步进行字符串的拼接和第2步的字符串的清空。</p>
+<h3 id="GDataXML解析"><a href="#GDataXML解析" class="headerlink" title="GDataXML解析"></a>GDataXML解析</h3><h4 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h4><p><code>GDataXML</code>并没有和<code>cocoaPod</code>进行关联，所以无法使用Pod进行管理，只能从网上直接下载源文件，然后手动导入。好在<code>GDataXML</code>很简单，只有一个头文件和一个实现文件，使用的时候导入其头文件即可。<br>关于导入方法，首先需要添加<code>libxml2.tbd</code>动态库，然后添加两个编译参数，这在<code>GDataXML.h</code>中描述的很明白，如下：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">// libxml includes require that the target Header Search Paths contain</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//   /usr/include/libxml2</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// and Other Linker Flags contain</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//   -lxml2</span></span><br></pre></td></tr></table></figure>
+<p>如果遇到：<br><img src="http://o8pgspaft.bkt.clouddn.com/06-18GDataXML%E9%94%99%E8%AF%AF.png" alt="错误"></p>
+<p>那就这样解决：<br><img src="http://o8pgspaft.bkt.clouddn.com/06-18GDataXML1.png" alt="解决"><br>还有这样：<br><img src="http://o8pgspaft.bkt.clouddn.com/06-18GDataXML2.png" alt=""></p>
+<h4 id="解析数据"><a href="#解析数据" class="headerlink" title="解析数据"></a>解析数据</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//初始化GDataXMLDocument，将整个文档读入</span></span><br><span class="line">GDataXMLDocument *doc = [[GDataXMLDocument alloc]initWithData:<span class="keyword">self</span>.xmlData options:<span class="number">0</span> error:<span class="literal">nil</span>];</span><br><span class="line"><span class="comment">//获取根节点</span></span><br><span class="line">GDataXMLElement *rootElement = [doc rootElement];</span><br><span class="line"><span class="comment">//获取根节点下的数据节点，返回值是数组类型</span></span><br><span class="line"><span class="built_in">NSArray</span> *Books = [rootElement elementsForName:<span class="string">@"Book"</span>];</span><br><span class="line"><span class="keyword">for</span> (GDataXMLElement *book <span class="keyword">in</span> Books)</span><br><span class="line">&#123;</span><br><span class="line">    HXTXMLDataModel *bookModel = [[HXTXMLDataModel alloc]init];</span><br><span class="line">    <span class="comment">//获取Book节点的属性值</span></span><br><span class="line">    bookModel.bookID = [[[book attributeForName:<span class="string">@"id"</span>] stringValue]integerValue];</span><br><span class="line">    <span class="comment">//获取Book下的数据，并且赋值给数据模型</span></span><br><span class="line">    bookModel.title = [[[book elementsForName:<span class="string">@"title"</span>]firstObject]stringValue];</span><br><span class="line">    bookModel.author = [[[book elementsForName:<span class="string">@"author"</span>]firstObject]stringValue];</span><br><span class="line">    bookModel.summary = [[[book elementsForName:<span class="string">@"summary"</span>]firstObject]stringValue];</span><br><span class="line">    <span class="comment">//将数据模型添加至全局的模型数组中</span></span><br><span class="line">    [<span class="keyword">self</span>.books addObject:bookModel];</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">HXTXMLDataModel *bookModel = <span class="keyword">self</span>.books[<span class="number">0</span>];</span><br><span class="line"><span class="comment">//取出数据，更新UI</span></span><br><span class="line"><span class="keyword">self</span>.Label1.text = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%ld"</span>,bookModel.bookID];</span><br></pre></td></tr></table></figure>
+<p><code>GDataXML</code>将文件整个读入内存，所以取值的时候一般都会返回包含所有数据的数组类型，如果要进行数据的查找，将会非常方便！不过不能像系统自带的那样通过<code>KVC</code>赋值给数据模型，这一点也可以看出来<code>GDataXML</code>比较适合小的文档解析使用。</p>
+<h2 id="Json文档解析"><a href="#Json文档解析" class="headerlink" title="Json文档解析"></a>Json文档解析</h2><p>同样，关于json文档格式不会涉及太多，可以<a href="http://baike.baidu.com/view/136475.htm" target="_blank" rel="external">json百度百科</a>。<br>本例用到的json文档：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "Result": [</span><br><span class="line">        &#123;</span><br><span class="line">            "id": "1",</span><br><span class="line">            "title": "月亮与六便士",</span><br><span class="line">            "author": "毛姆",</span><br><span class="line">            "summary": "上帝的磨盘磨得很慢，却磨得很细上帝的磨盘磨得</span><br><span class="line">        很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很细上帝的磨盘</span><br><span class="line">        磨得很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很细上帝的</span><br><span class="line">        磨盘磨得很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很细上</span><br><span class="line">        帝的磨盘磨得很慢，却磨得很细上帝的磨盘磨得很慢，却磨得很</span><br><span class="line">        细"</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">               </span><br><span class="line">            "id": "2",</span><br><span class="line">            "title": "岛上书店",</span><br><span class="line">            "author": "加布瑞埃拉·泽文",</span><br><span class="line">            "summary": "小岛上书店的老板和他的书店"</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            "id": "3",</span><br><span class="line">            "title": "白夜行",</span><br><span class="line">            "author": "东野圭吾",</span><br><span class="line">            "summary": "畸形但却最深沉的爱情"</span><br><span class="line">        &#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="本地json文件解析"><a href="#本地json文件解析" class="headerlink" title="本地json文件解析"></a>本地json文件解析</h4><p>其实iOS更新到现在，json解析的第三方框架也有很多，不过iOS系统自带的解析依然效率是最高的，所以这里着重讲一下系统自带的解析。对于json解析，最重要的是看清楚文档结构，不用一着急上来就要解析，json文档和OC之间的对应关系大致为：  </p>
+<table>
+<thead>
+<tr>
+<th>json</th>
+<th>OC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>大括号 {}</td>
+<td>NSDictionary</td>
+</tr>
+<tr>
+<td>中括号 []</td>
+<td>NSArray</td>
+</tr>
+<tr>
+<td>双引号 “”</td>
+<td>NSString</td>
+</tr>
+<tr>
+<td>数字 10、1.3</td>
+<td>NSNumber</td>
+</tr>
+</tbody>
+</table>
+<p>按照这个对应关系，我们来分析一下上边的json文档。  </p>
+<ul>
+<li>首先最外层是一个大括号，所以最一开始应该用<code>NSDictionary</code>来接收解析出来的数据；</li>
+<li>其次所有的数据都在<code>“Result”</code>这个键对应的值里边，所以应该用<code>keyForValue</code>这个方法获取<code>“Result”</code>下边的数据，而这个数据最为外层是一对中括号<code>[]</code>，所以应该用数组来进行接收；</li>
+<li>最后中括号<code>[]</code>里边依然是三个大括号<code>{}</code>括起来的数据，所以数组里边的元素都是<code>NSDictionary</code>类型，我们用<code>NSDictionary</code>对数组进行遍历，然后再次通过<code>keyForValue</code>获取最后我们需要的值。当然这一步，如果数据模型的属性和<code>key</code>值对应，则用<code>KVC</code>更是方便。</li>
+</ul>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//懒加载json数据，转换成NSData以备解析</span></span><br><span class="line"><span class="built_in">NSString</span> *jsonPath = [[<span class="built_in">NSBundle</span> mainBundle]pathForResource:<span class="string">@"书目"</span> ofType:<span class="string">@"json"</span>];</span><br><span class="line">_jsonData = [<span class="built_in">NSData</span> dataWithContentsOfFile:jsonPath];</span><br><span class="line"></span><br><span class="line"><span class="comment">//1. 用jsonDict字典来接收解析出来的初步数据</span></span><br><span class="line"><span class="keyword">self</span>.jsonDict = [<span class="built_in">NSJSONSerialization</span> JSONObjectWithData:<span class="keyword">self</span>.jsonData options:<span class="number">0</span> error:<span class="literal">nil</span>];</span><br><span class="line"><span class="comment">//    NSLog(@"%@", self.jsonDict);</span></span><br><span class="line"><span class="comment">//2. 用键值取出Result对应的数据，保存在数组中</span></span><br><span class="line"><span class="built_in">NSArray</span> *resultArr = [<span class="keyword">self</span>.jsonDict valueForKey:<span class="string">@"Result"</span>];</span><br><span class="line"><span class="comment">//3. 获取包含最终数据的字典</span></span><br><span class="line"><span class="built_in">NSDictionary</span> *bookDict = [resultArr firstObject];</span><br><span class="line"><span class="comment">//4. 赋值给数据模型，当然用KVC更方便</span></span><br><span class="line">HXTXMLDataModel *bookModel = [[HXTXMLDataModel alloc]init];</span><br><span class="line">bookModel.bookID = [[[resultArr firstObject] valueForKey:<span class="string">@"id"</span>]integerValue];</span><br><span class="line">bookModel.title = [bookDict valueForKey:<span class="string">@"title"</span>];</span><br><span class="line">bookModel.author = [bookDict valueForKey:<span class="string">@"author"</span>];</span><br><span class="line">bookModel.summary = [bookDict valueForKey:<span class="string">@"summary"</span>];</span><br><span class="line"><span class="comment">//5. 根据数据进行更新</span></span><br><span class="line"><span class="keyword">self</span>.Label1.text = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%ld"</span>,bookModel.bookID];</span><br><span class="line"><span class="keyword">self</span>.Label2.text = bookModel.title;</span><br><span class="line"><span class="keyword">self</span>.Label3.text = bookModel.author;</span><br><span class="line"><span class="keyword">self</span>.Label4.text = bookModel.summary;</span><br></pre></td></tr></table></figure>
+<h4 id="网络json文件解析"><a href="#网络json文件解析" class="headerlink" title="网络json文件解析"></a>网络json文件解析</h4><p>其实网络json文档解析，跟前边本地的步骤一样，只不过是从网络服务器进行数据获取，写在这里只是为了说明，从iOS9开始，网络请求数据的方法有些变化：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//网址</span></span><br><span class="line"><span class="built_in">NSString</span> *path = <span class="string">@"http://www.weather.com.cn/data/sk/101010100.html"</span>;</span><br><span class="line"><span class="comment">//初始化url</span></span><br><span class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:path];</span><br><span class="line"><span class="comment">//获取网络单例</span></span><br><span class="line"><span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sharedSession];</span><br><span class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:url];</span><br><span class="line"><span class="comment">//生成请求数据的任务</span></span><br><span class="line"><span class="built_in">NSURLSessionDataTask</span> *task = [session dataTaskWithRequest:request</span><br><span class="line">                                        completionHandler:^(<span class="built_in">NSData</span> * _Nullable data, </span><br><span class="line">                                        <span class="built_in">NSURLResponse</span> * _Nullable response, </span><br><span class="line">                                        <span class="built_in">NSError</span> * _Nullable error) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//解析json数据，跟上一个本地解析的步骤一样，不再赘述</span></span><br><span class="line">   </span><br><span class="line">&#125;];</span><br><span class="line"><span class="comment">//调用任务</span></span><br><span class="line">[task resume];</span><br></pre></td></tr></table></figure>
+<h4 id="JSONKit解析"><a href="#JSONKit解析" class="headerlink" title="JSONKit解析"></a>JSONKit解析</h4><p>先说一个小坑：我是通过<code>cocoaPod</code>导入的<code>JSONKit</code>库，不过引入头文件之后，报出20个错误: </p>
+<p><img src="http://o8pgspaft.bkt.clouddn.com/06-18JSONKit%E9%94%99%E8%AF%AF.png" alt="错误"></p>
+<p>解决方法是：首先选中Xcod左边栏<code>Pods</code>，然后编译设置中做如下设置：<br><img src="http://o8pgspaft.bkt.clouddn.com/06-18JSONKit%E9%94%99%E8%AF%AF%E4%BF%AE%E5%A4%8D.png" alt=""><br>完工开始。<br>JSONKit的使用也很简单，常用的方法有：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)objectFromJSO<span class="built_in">NString</span>;</span><br><span class="line">- (<span class="keyword">id</span>)objectFromJSO<span class="built_in">NStringWithParseOptions</span>:(JKParseOptionFlags)parseOptionFlags;</span><br><span class="line">- (<span class="keyword">id</span>)objectFromJSONData;</span><br><span class="line">- (<span class="keyword">id</span>)objectFromJSONDataWithParseOptions:(JKParseOptionFlags)parseOptionFlags;</span><br></pre></td></tr></table></figure>
+<p>如果数据是“单层”的，即<code>value</code>都是字符串、数字，可以使用<code>objectFromJSONString</code>或者<code>objectFromJSONData</code>。<br>但是如果数据有嵌套，即value里有数组、字典、对象等，最好使用带参数的<code>objectFromJSONStringWithParseOptions</code>或者<code>objectFromJSONDataWithParseOptions</code>。<br>这个例子中，我使用的是和<code>data</code>相关的方法。</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1. 调用JSONKit的方法进行解析，用字典接收，这里边的枚举值我都尝试了，都可以得到正确结果，暂不清楚区别是什么</span></span><br><span class="line">    <span class="keyword">self</span>.jsonDict = [<span class="keyword">self</span>.jsonData objectFromJSONDataWithParseOptions:JKSerializeOptionNone];</span><br><span class="line"><span class="comment">//    NSLog(@"%@====", self.jsonDict);</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//2. 用键值取出Result对应的数据，保存在数组中</span></span><br><span class="line">    <span class="built_in">NSArray</span> *resultArr = [<span class="keyword">self</span>.jsonDict valueForKey:<span class="string">@"Result"</span>];</span><br><span class="line">    <span class="comment">//3. 获取包含最终数据的字典</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *bookDict = [resultArr firstObject];</span><br><span class="line">    <span class="comment">//4. 赋值给数据模型，当然用KVC更方便</span></span><br><span class="line">    HXTXMLDataModel *bookModel = [[HXTXMLDataModel alloc]init];</span><br><span class="line">    bookModel.bookID = [[[resultArr firstObject] valueForKey:<span class="string">@"id"</span>]integerValue];</span><br><span class="line">    bookModel.title = [bookDict valueForKey:<span class="string">@"title"</span>];</span><br><span class="line">    bookModel.author = [bookDict valueForKey:<span class="string">@"author"</span>];</span><br><span class="line">    bookModel.summary = [bookDict valueForKey:<span class="string">@"summary"</span>];</span><br><span class="line">    <span class="comment">//5. 根据数据进行更新</span></span><br><span class="line">    <span class="keyword">self</span>.Label1.text = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%ld"</span>,bookModel.bookID];</span><br><span class="line">    <span class="keyword">self</span>.Label2.text = bookModel.title;</span><br><span class="line">    <span class="keyword">self</span>.Label3.text = bookModel.author;</span><br><span class="line">    <span class="keyword">self</span>.Label4.text = bookModel.summary;</span><br></pre></td></tr></table></figure>
+<p>大家也都看出来了，其实只是第一步解析的不同，后边数据处理的方法和之前是一模一样的。<br>另外再提一点，我在用<code>JSONKit</code>解析的时候，发现它对json数据的格式比较挑剔。可以看到最上边我那个json文档例子，最后一个数据的大括号外边多了一个逗号，用系统进行解析的时候没什么问题，但是换成<code>JSONKit</code>之后，尝试了几次都解析不出来，后来打印错误一看，提示那个逗号不对，删除之后再解析就正确了。希望大家引以为戒！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/30/iOS下拉刷新和渐变横幅/" rel="next" title="iOS下拉刷新和渐变横幅">
+                <i class="fa fa-chevron-left"></i> iOS下拉刷新和渐变横幅
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/13/UITableView单元格重用问题/" rel="prev" title="UITableView单元格重用问题">
+                UITableView单元格重用问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/08/iOS XML:json数据解析/"
+           data-title="iOS XML/json数据解析" data-url="http://yoursite.com/2016/06/08/iOS XML:json数据解析/">
+      </div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="dalianer" />
+          <p class="site-author-name" itemprop="name">dalianer</p>
+          <p class="site-description motion-element" itemprop="description">大脸儿的成长记录</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hexintao" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML文件解析"><span class="nav-number">2.</span> <span class="nav-text">XML文件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NSXMLParser解析"><span class="nav-number">2.1.</span> <span class="nav-text">NSXMLParser解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-使用步骤："><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 使用步骤：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-代理方法"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. 代理方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDataXML解析"><span class="nav-number">2.2.</span> <span class="nav-text">GDataXML解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#导入"><span class="nav-number">2.2.1.</span> <span class="nav-text">导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析数据"><span class="nav-number">2.2.2.</span> <span class="nav-text">解析数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Json文档解析"><span class="nav-number">3.</span> <span class="nav-text">Json文档解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#本地json文件解析"><span class="nav-number">3.0.1.</span> <span class="nav-text">本地json文件解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络json文件解析"><span class="nav-number">3.0.2.</span> <span class="nav-text">网络json文件解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONKit解析"><span class="nav-number">3.0.3.</span> <span class="nav-text">JSONKit解析</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dalianer—>You don’t change, you won’t change!</span>
+</div>
+
+<div class="powered-by">
+  由 Hexo 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+    NexT.Mist
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"dalianer"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qTC2lKnjgeMyQWqFztPA4ppN-gzGzoHsz", "CoPDrDN4NplhcYAjsrszCly9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
