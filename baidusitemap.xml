@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/07/06/UICollectionView%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</loc>
+    <lastmod>2016-07-07T11:11:36.000Z</lastmod>
+    <data>
+        <display>
+        <title>UICollectionView的一些坑</title>
+        <pubTime>2016-07-06T08:59:55.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+        <tag>Objective-C</tag>
+         
+        <tag>UICollectionView</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS开发" url="http://yoursite.com/categories/iOS-Development/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/06/13/UITableView%E5%8D%95%E5%85%83%E6%A0%BC%E9%87%8D%E7%94%A8%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2016-06-29T09:12:05.000Z</lastmod>
     <data>
@@ -11,6 +35,8 @@
         <title>UITableView单元格重用问题</title>
         <pubTime>2016-06-13T09:32:32.000Z</pubTime>
         
+        <tag>iOS</tag>
+         
         <tag>UITableView</tag>
          
         <tag>单元格</tag>
@@ -18,8 +44,6 @@
         <tag>cell</tag>
          
         <tag>重用</tag>
-         
-        <tag>iOS</tag>
          
          
            
@@ -156,9 +180,9 @@
         
         <tag>iOS</tag>
          
-        <tag>翻译</tag>
-         
         <tag>Objective-C</tag>
+         
+        <tag>翻译</tag>
          
         <tag>开发</tag>
          
@@ -204,9 +228,9 @@
         
         <tag>iOS</tag>
          
-        <tag>翻译</tag>
-         
         <tag>Objective-C</tag>
+         
+        <tag>翻译</tag>
          
         <tag>开发</tag>
          

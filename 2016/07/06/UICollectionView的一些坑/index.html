@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS,UITableView,单元格,cell,重用," />
+  <meta name="keywords" content="iOS,Objective-C,UICollectionView," />
 
 
 
@@ -84,18 +84,16 @@
 
 
 
-<meta name="description" content="引子iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。">
+<meta name="description" content="引子UICollectionView和UITableView很类似，都是展示类型重复的元素。大家肯定UITableView已经很熟悉了，感觉UICollectionView肯定so easy！今天我就列举一下我遇到的几个坑吧，看看大家遇见过没，以此为戒咯！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UITableView单元格重用问题">
-<meta property="og:url" content="http://yoursite.com/2016/06/13/UITableView单元格重用问题/index.html">
+<meta property="og:title" content="UICollectionView的一些坑">
+<meta property="og:url" content="http://yoursite.com/2016/07/06/UICollectionView的一些坑/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description" content="引子iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。">
-<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/UITableView%E9%87%8D%E7%94%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:updated_time" content="2016-06-29T09:12:05.000Z">
+<meta property="og:description" content="引子UICollectionView和UITableView很类似，都是展示类型重复的元素。大家肯定UITableView已经很熟悉了，感觉UICollectionView肯定so easy！今天我就列举一下我遇到的几个坑吧，看看大家遇见过没，以此为戒咯！">
+<meta property="og:updated_time" content="2016-07-07T11:11:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UITableView单元格重用问题">
-<meta name="twitter:description" content="引子iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。">
-<meta name="twitter:image" content="http://o8pgspaft.bkt.clouddn.com/UITableView%E9%87%8D%E7%94%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta name="twitter:title" content="UICollectionView的一些坑">
+<meta name="twitter:description" content="引子UICollectionView和UITableView很类似，都是展示类型重复的元素。大家肯定UITableView已经很熟悉了，感觉UICollectionView肯定so easy！今天我就列举一下我遇到的几个坑吧，看看大家遇见过没，以此为戒咯！">
 
 
 
@@ -113,7 +111,7 @@
   };
 </script>
 
-  <title> UITableView单元格重用问题 | 大脸儿 </title>
+  <title> UICollectionView的一些坑 | 大脸儿 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +251,7 @@
             
             
               
-                UITableView单元格重用问题
+                UICollectionView的一些坑
               
             
           </h1>
@@ -265,8 +263,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-13T17:32:32+08:00" content="2016-06-13">
-              2016-06-13
+            <time itemprop="dateCreated" datetime="2016-07-06T16:59:55+08:00" content="2016-07-06">
+              2016-07-06
             </time>
           </span>
 
@@ -295,8 +293,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/13/UITableView单元格重用问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/13/UITableView单元格重用问题/" itemprop="commentsCount"></span>
+                <a href="/2016/07/06/UICollectionView的一些坑/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/06/UICollectionView的一些坑/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -306,7 +304,7 @@
 
           
           
-             <span id="/2016/06/13/UITableView单元格重用问题/" class="leancloud_visitors" data-flag-title="UITableView单元格重用问题">
+             <span id="/2016/07/06/UICollectionView的一些坑/" class="leancloud_visitors" data-flag-title="UICollectionView的一些坑">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -328,18 +326,28 @@
       
 
       
-        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。<br><a id="more"></a></p>
-<h2 id="UITableViewCell重用机制"><a href="#UITableViewCell重用机制" class="headerlink" title="UITableViewCell重用机制"></a>UITableViewCell重用机制</h2><p>关于详细的重用机制，网上一大把，例如<a href="http://sharonhu1990.github.io/2015/10/28/%E6%B5%85%E6%9E%90UITableViewCell%E9%87%8D%E7%94%A8%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">这篇文章</a>。总的来说就一个意思：屏幕显示的是固定数目的单元格，可以把推出屏幕的单元格缓存起来，供后续加载使用，既可以加快载入速度，也可以保证内存不会大幅上升。<br><img src="http://o8pgspaft.bkt.clouddn.com/UITableView%E9%87%8D%E7%94%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="单元格重用示意图"><br>注：上传完之后才知道图片画错了，其实系统会创建屏幕能显示的cell个数再加1个单元格，也就是多创建一个，图中是单元格6也应该是创建好的，单元格7才是从缓存中读取的。</p>
-<h2 id="数据错误现象"><a href="#数据错误现象" class="headerlink" title="数据错误现象"></a>数据错误现象</h2><p>也正是因为单元格重用，假如进入缓存的单元格与将要加载的单元格显示的样式不同，则在重用的时候会发生数据错误的情况。例如之前单元格的内容显示在了新的单元格中，或者之前的单元格内容发生改变等等。</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>主要是以下3个方法：</p>
-<ol>
-<li>不重用单元格。很好理解，不过就无法利用单元格重用的种种优点了，基本可以不考虑；</li>
-<li>利用标识符将不同样式的单元格进行标记，然后根据不同的标识符分别进行重用处理；</li>
-<li>在单元格重用后，加载新的数据之前对单元格的内容进行清空。  </li>
-</ol>
-<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><h3 id="方法2："><a href="#方法2：" class="headerlink" title="方法2："></a>方法2：</h3><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *cellIdetifier = [[<span class="built_in">NSString</span> alloc]init];</span><br><span class="line">    <span class="keyword">if</span> (indexPath.row == <span class="number">0</span>) <span class="comment">//如果是第一行</span></span><br><span class="line">    &#123;</span><br><span class="line">        cellIdetifier = <span class="string">@"FirstRowCell"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cellIdetifier = <span class="string">@"NotFirstRowCell"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//从缓存池中缓存单元格</span></span><br><span class="line">    HMGHomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetifier];</span><br><span class="line">    <span class="keyword">if</span> (cell == <span class="literal">nil</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//如果为空就根据标识符新建</span></span><br><span class="line">        cell = [[HMGHomePageTableViewCell alloc]initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:cellIdetifier];</span><br><span class="line">        <span class="keyword">if</span> ([cellIdetifier isEqualToString:<span class="string">@"FirstRowCell"</span>])</span><br><span class="line">        &#123;  </span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         *  这里根据不同的标识符加载不同的控件即可</span><br><span class="line">         */</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法3："><a href="#方法3：" class="headerlink" title="方法3："></a>方法3：</h3><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *cellIdetifier = <span class="string">@"HomePageCell"</span>;</span><br><span class="line">    HMGHomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetifier];</span><br><span class="line">    <span class="keyword">if</span> (cell != <span class="literal">nil</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="comment">//清空cell的内容并置nil</span></span><br><span class="line">        [cell.contentView.subviews makeObjectsPerformSelector:<span class="keyword">@selector</span>(removeFromSuperview)];</span><br><span class="line">        cell = <span class="literal">nil</span>; <span class="comment">//原因见下边注解</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cell == <span class="literal">nil</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        cell = [[HMGHomePageTableViewCell alloc]initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:cellIdetifier];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>注：一开始没有将cell置nil，在执行<code>removeFromSuperview</code>方法的时候，系统会调用<code>layoutSubviews</code>方法，我在这个方法里边进行masonry添加约束，而添加约束的前提是控件一定要先添加到父视图中，绕过<code>init</code>添加到父视图的操作而直接添加约束，会异常，<code>couldn&#39;t find a common superView</code>。</p>
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p><code>UICollectionView</code>和<code>UITableView</code>很类似，都是展示类型重复的元素。大家肯定<code>UITableView</code>已经很熟悉了，感觉<code>UICollectionView</code>肯定so easy！今天我就列举一下我遇到的几个坑吧，看看大家遇见过没，以此为戒咯！<br><a id="more"></a>  </p>
+<h2 id="UICollectionView遵守的协议"><a href="#UICollectionView遵守的协议" class="headerlink" title="UICollectionView遵守的协议"></a>UICollectionView遵守的协议</h2><p><code>UITableView</code>中只需遵守<code>UITableViewDataSource</code>和<code>UITableViewDelegate</code>两个协议即可，不过对于<code>UICollectionView</code>来说，需要遵守：<br><code>UICollectionViewDataSource</code>：数据源协议，和<code>UITableView</code>类似，也需要返回这三个方法，看名字应该就知道是什么意思了。</p>
+<ul>
+<li><code>numberOfSectionsInCollectionView</code> </li>
+<li><code>numberOfItemsInSection</code> </li>
+<li><code>cellForItemAtIndexPath</code></li>
+</ul>
+<p><code>UICollectionViewFlowLayout</code>：内容排版协议。</p>
+<ul>
+<li><code>sizeForItemAtIndexPath</code>：元素大小；</li>
+<li><code>insetForSectionAtIndex</code>：整个元素区域的边距（margin）值；</li>
+<li><code>minimumInteritemSpacingForSectionAtIndex</code>：元素间距；</li>
+<li><code>minimumLineSpacingForSectionAtIndex</code>：元素行距（列距）。</li>
+</ul>
+<p><code>UICollectionViewDelegate</code>：代理协议。<br><code>shouldHighlightItemAtIndexPath</code>：是否高亮，默认为YES；<br><code>didHighlightItemAtIndexPath</code>：某个元素高亮；<br><code>shouldSelectItemAtIndexPath</code>：是否支持选中，默认为YES；<br><code>didSelectItemAtIndexPath</code>：选中某个元素；<br><code>shouldDeselectItemAtIndexPath</code>：是否支持反选，默认为YES；这里边我设置成NO，下边反选的代理方法还是会被执行，暂时不清楚为什么。<br><code>didDeselectItemAtIndexPath</code>：某个元素反选。</p>
+<h2 id="UICollectionView初始化"><a href="#UICollectionView初始化" class="headerlink" title="UICollectionView初始化"></a>UICollectionView初始化</h2><p>如果是用纯代码创建的<code>UICollectionView</code>，需要在初始化<code>UICollectionView</code>之前先初始化<code>flowLayout</code>，如下代码：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UICollectionViewFlowLayout</span> *flowLayout = [[<span class="built_in">UICollectionViewFlowLayout</span> alloc]init];</span><br><span class="line"><span class="built_in">CGRect</span> collecionViewFrame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">20</span>, <span class="number">375</span>, <span class="number">148</span>);</span><br><span class="line"><span class="built_in">UICollectionView</span> *collectionView =</span><br><span class="line">    [[<span class="built_in">UICollectionView</span> alloc]initWithFrame:collecionViewFrame</span><br><span class="line">                      collectionViewLayout:flowLayout];</span><br></pre></td></tr></table></figure>
+<p>否则会报错：<br><code>reason: &#39;UICollectionView must be initialized with a non-nil layout parameter&#39;</code>。<br>剩下的只需设置<code>UICollectionView</code>的<code>dataSource</code>和<code>delegate</code>就可以了，和<code>UITableView</code>一样。</p>
+<h2 id="自定义UICollectionViewCell"><a href="#自定义UICollectionViewCell" class="headerlink" title="自定义UICollectionViewCell"></a>自定义UICollectionViewCell</h2><h3 id="1-进行注册"><a href="#1-进行注册" class="headerlink" title="1. 进行注册"></a>1. 进行注册</h3><p>首先要先对<code>UICollectionView</code>的<code>cell</code>进行注册，这一步和博客另一篇<a href="http://blog.dalianer.com/2016/05/14/iOS%E5%8D%95%E5%85%83%E6%A0%BC%E9%87%8D%E7%94%A8%E9%94%99%E8%AF%AF/" target="_blank" rel="external">单元格重用错误</a>类似。但是<code>UICollectionView</code>中这样解决：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">self</span>.collectionView registerClass:[CollectionViewCellTest class]</span><br><span class="line">            forCellWithReuseIdentifier:cellIdentifier];</span><br></pre></td></tr></table></figure>
+<p>其中，<code>CollectionViewCellTest</code>是自定义<code>cell</code>类的名称，一定要修改，否则接下来的<code>cell</code>无法访问自定义<code>cell</code>中的属性或者方法。如果不是自定义，就写<code>UICollecitonViewCell</code>。</p>
+<h3 id="2-不需要判断if-cell"><a href="#2-不需要判断if-cell" class="headerlink" title="2. 不需要判断if(!cell)"></a>2. 不需要判断if(!cell)</h3><p>在<code>UITableView</code>中，重用完<code>cell</code>之后，我们通常会判断<code>cell</code>是否为空，如果为空，就去新建，因为<code>cell</code>的初始化方法有多个，所以就需要进行判断并手动指定。<br>不过在<code>UICollectionView</code>中，<code>cell</code>的初始化方法只有<code>initWithFrame</code>这一个，如果<code>cell</code>为空的话，系统会自动调用进行创建，所以不需要再去手动判断。进而引申可以知道，如果自定义<code>cell</code>的话，我们就需要复写<code>- (instancetype)initWithFrame</code>。</p>
 
       
     </div>
@@ -363,13 +371,9 @@
           
             <a href="/tags/iOS/" rel="tag">#iOS</a>
           
-            <a href="/tags/UITableView/" rel="tag">#UITableView</a>
+            <a href="/tags/Objective-C/" rel="tag">#Objective-C</a>
           
-            <a href="/tags/单元格/" rel="tag">#单元格</a>
-          
-            <a href="/tags/cell/" rel="tag">#cell</a>
-          
-            <a href="/tags/重用/" rel="tag">#重用</a>
+            <a href="/tags/UICollectionView/" rel="tag">#UICollectionView</a>
           
         </div>
       
@@ -378,17 +382,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/08/iOS XML:json数据解析/" rel="next" title="iOS XML/json数据解析">
-                <i class="fa fa-chevron-left"></i> iOS XML/json数据解析
+              <a href="/2016/06/14/MJRefresh下拉刷新使用/" rel="next" title="MJRefresh下拉刷新使用">
+                <i class="fa fa-chevron-left"></i> MJRefresh下拉刷新使用
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/14/MJRefresh下拉刷新使用/" rel="prev" title="MJRefresh下拉刷新使用">
-                MJRefresh下拉刷新使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -414,8 +414,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/13/UITableView单元格重用问题/"
-           data-title="UITableView单元格重用问题" data-url="http://yoursite.com/2016/06/13/UITableView单元格重用问题/">
+      <div class="ds-thread" data-thread-key="2016/07/06/UICollectionView的一些坑/"
+           data-title="UICollectionView的一些坑" data-url="http://yoursite.com/2016/07/06/UICollectionView的一些坑/">
       </div>
     
   </div>
@@ -516,7 +516,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableViewCell重用机制"><span class="nav-number">2.</span> <span class="nav-text">UITableViewCell重用机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据错误现象"><span class="nav-number">3.</span> <span class="nav-text">数据错误现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">4.</span> <span class="nav-text">解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码"><span class="nav-number">5.</span> <span class="nav-text">示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2："><span class="nav-number">5.1.</span> <span class="nav-text">方法2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法3："><span class="nav-number">5.2.</span> <span class="nav-text">方法3：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UICollectionView遵守的协议"><span class="nav-number">2.</span> <span class="nav-text">UICollectionView遵守的协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UICollectionView初始化"><span class="nav-number">3.</span> <span class="nav-text">UICollectionView初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义UICollectionViewCell"><span class="nav-number">4.</span> <span class="nav-text">自定义UICollectionViewCell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-进行注册"><span class="nav-number">4.1.</span> <span class="nav-text">1. 进行注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-不需要判断if-cell"><span class="nav-number">4.2.</span> <span class="nav-text">2. 不需要判断if(!cell)</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
