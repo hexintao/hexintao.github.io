@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="下拉刷新,iOS开发,pull,refresh,渐变,banner," />
+  <meta name="keywords" content="iOS开发,下拉刷新,pull,refresh,渐变,banner," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="下拉刷新&amp;emsp;&amp;emsp;第三方的下拉刷新一般都会封装的比较好，使用起来非常简单方便，不过在这之前，最好还是自己搞清楚系统的下拉刷新吧，也很简单。UIRefreshControl官方文档。">
+<meta name="description" content="引子iOS中利用系统自带的属性设置渐变的横幅。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS下拉刷新和渐变横幅">
-<meta property="og:url" content="http://yoursite.com/2016/05/30/iOS下拉刷新和渐变横幅/index.html">
+<meta property="og:title" content="iOS开发之——下拉刷新和渐变横幅">
+<meta property="og:url" content="http://yoursite.com/2016/05/30/iOS渐变横幅/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description" content="下拉刷新&amp;emsp;&amp;emsp;第三方的下拉刷新一般都会封装的比较好，使用起来非常简单方便，不过在这之前，最好还是自己搞清楚系统的下拉刷新吧，也很简单。UIRefreshControl官方文档。">
-<meta property="og:updated_time" content="2016-06-17T13:16:30.000Z">
+<meta property="og:description" content="引子iOS中利用系统自带的属性设置渐变的横幅。">
+<meta property="og:updated_time" content="2016-07-10T13:04:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS下拉刷新和渐变横幅">
-<meta name="twitter:description" content="下拉刷新&amp;emsp;&amp;emsp;第三方的下拉刷新一般都会封装的比较好，使用起来非常简单方便，不过在这之前，最好还是自己搞清楚系统的下拉刷新吧，也很简单。UIRefreshControl官方文档。">
+<meta name="twitter:title" content="iOS开发之——下拉刷新和渐变横幅">
+<meta name="twitter:description" content="引子iOS中利用系统自带的属性设置渐变的横幅。">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> iOS下拉刷新和渐变横幅 | 大脸儿 </title>
+  <title> iOS开发之——下拉刷新和渐变横幅 | 大脸儿 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +251,7 @@
             
             
               
-                iOS下拉刷新和渐变横幅
+                iOS开发之——下拉刷新和渐变横幅
               
             
           </h1>
@@ -293,8 +293,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/30/iOS下拉刷新和渐变横幅/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/iOS下拉刷新和渐变横幅/" itemprop="commentsCount"></span>
+                <a href="/2016/05/30/iOS渐变横幅/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/iOS渐变横幅/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -304,7 +304,7 @@
 
           
           
-             <span id="/2016/05/30/iOS下拉刷新和渐变横幅/" class="leancloud_visitors" data-flag-title="iOS下拉刷新和渐变横幅">
+             <span id="/2016/05/30/iOS渐变横幅/" class="leancloud_visitors" data-flag-title="iOS开发之——下拉刷新和渐变横幅">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -326,29 +326,7 @@
       
 
       
-        <h3 id="下拉刷新"><a href="#下拉刷新" class="headerlink" title="下拉刷新"></a>下拉刷新</h3><p>&emsp;&emsp;第三方的下拉刷新一般都会封装的比较好，使用起来非常简单方便，不过在这之前，最好还是自己搞清楚系统的下拉刷新吧，也很简单。<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIRefreshControl_class/" target="_blank" rel="external">UIRefreshControl官方文档</a>。<a id="more"></a></p>
-<p>&emsp;&emsp;系统的下拉刷新主要是针对列表视图，如果下拉控件用在其他视图控制器中，结果不可预知，官方说明：</p>
-<blockquote>
-<p>NOTE</p>
-<p>Because the refresh control is specifically designed for use in a table view that’s managed by a table view controller, using it in a different context can result in undefined behavior.”</p>
-</blockquote>
-<p>UIRefreshControl的属性：  </p>
-<ul>
-<li>tintColor：指示器的颜色，注意，只是那个菊花的颜色，不牵扯文字的颜色。</li>
-<li>attributedTitle：指示文字。  </li>
-</ul>
-<p>两个实例方法：  </p>
-<ul>
-<li><code>- (void)beginRefreshing</code>：开始刷新，如果需要隔断时间自动刷新的话，定时器就需要调用这个方法。</li>
-<li><code>- (void)endRefreshing</code>：结束刷新。当刷新操作结束之后，调用此方法结束菊花。</li>
-</ul>
-<p>还有一个BOOL变量：</p>
-<ul>
-<li><code>BOOL refreshing</code>：当前的刷新状态。</li>
-</ul>
-<p>按照上述接口说明，创建刷新动作非常简单。</p>
-<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UIRefreshControl</span> *refresh = [[<span class="built_in">UIRefreshControl</span> alloc]init];</span><br><span class="line">    refresh.attributedTitle = [[<span class="built_in">NSAttributedString</span> alloc]initWithString:<span class="string">@"下拉刷新"</span>];</span><br><span class="line">    refresh.tintColor = [<span class="built_in">UIColor</span> orangeColor];</span><br><span class="line">    [refresh addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(pullToRefresh) forControlEvents:<span class="built_in">UIControlEventValueChanged</span>];</span><br></pre></td></tr></table></figure>
-<p>然后在<code>pullToRefresh</code>方法中执行刷新操作，并更改提示文字和刷新状态即可。</p>
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>iOS中利用系统自带的属性设置渐变的横幅。<br><a id="more"></a></p>
 <h3 id="tableView的渐变banner（横幅）"><a href="#tableView的渐变banner（横幅）" class="headerlink" title="tableView的渐变banner（横幅）"></a>tableView的渐变banner（横幅）</h3><p>UITableView是UIScrollView的子类，所以后者有的属性，tableView都有，所以我们可以通过代理方法：<br><code>- (void)scrollViewDidScroll:(UIScrollView *)scrollView</code>，通过滑动的偏移量来设置banner的透明度。至于设置系数，我是这么做：先大致想好需要在哪一段位移中改变alpha值，然后选取两个端点，建立一个二元一次方程组，联立求解即可。</p>
 <p>如果不想让横幅跟着移动，那也可以在这个方法里实时调整banner的y值。</p>
 <h3 id="颜色渐变"><a href="#颜色渐变" class="headerlink" title="颜色渐变"></a>颜色渐变</h3><p>iOS有比较简单的生成颜色渐变的方法——CAGradientLayer。<a href="https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CAGradientLayer_class/" target="_blank" rel="external">官方文档</a>。它包括以下属性：</p>
@@ -382,9 +360,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/下拉刷新/" rel="tag">#下拉刷新</a>
-          
             <a href="/tags/iOS开发/" rel="tag">#iOS开发</a>
+          
+            <a href="/tags/下拉刷新/" rel="tag">#下拉刷新</a>
           
             <a href="/tags/pull/" rel="tag">#pull</a>
           
@@ -401,16 +379,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/28/iOS自定义UIPageControl/" rel="next" title="iOS自定义UIPageControl">
-                <i class="fa fa-chevron-left"></i> iOS自定义UIPageControl
+              <a href="/2016/05/28/iOS自定义UIPageControl/" rel="next" title="iOS开发之——自定义UIPageControl">
+                <i class="fa fa-chevron-left"></i> iOS开发之——自定义UIPageControl
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/06/08/iOS XML:json数据解析/" rel="prev" title="iOS XML/json数据解析">
-                iOS XML/json数据解析 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/08/iOS XML:json数据解析/" rel="prev" title="iOS开发之——XML/json数据解析">
+                iOS开发之——XML/json数据解析 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -437,8 +415,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/30/iOS下拉刷新和渐变横幅/"
-           data-title="iOS下拉刷新和渐变横幅" data-url="http://yoursite.com/2016/05/30/iOS下拉刷新和渐变横幅/">
+      <div class="ds-thread" data-thread-key="2016/05/30/iOS渐变横幅/"
+           data-title="iOS开发之——下拉刷新和渐变横幅" data-url="http://yoursite.com/2016/05/30/iOS渐变横幅/">
       </div>
     
   </div>
@@ -482,7 +460,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -499,7 +477,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -539,7 +517,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下拉刷新"><span class="nav-number">1.</span> <span class="nav-text">下拉刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tableView的渐变banner（横幅）"><span class="nav-number">2.</span> <span class="nav-text">tableView的渐变banner（横幅）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色渐变"><span class="nav-number">3.</span> <span class="nav-text">颜色渐变</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tableView的渐变banner（横幅）"><span class="nav-number">1.1.</span> <span class="nav-text">tableView的渐变banner（横幅）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色渐变"><span class="nav-number">1.2.</span> <span class="nav-text">颜色渐变</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

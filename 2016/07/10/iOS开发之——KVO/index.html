@@ -1,0 +1,801 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,Objective-C,KVO," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="引子KVO：即Key-Value-Observer，键值观测模式，它是一种允许当某些对象的特定属性值改变时，及时通知给对象的观察者（其他对象）的机制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发之——KVO">
+<meta property="og:url" content="http://yoursite.com/2016/07/10/iOS开发之——KVO/index.html">
+<meta property="og:site_name" content="大脸儿">
+<meta property="og:description" content="引子KVO：即Key-Value-Observer，键值观测模式，它是一种允许当某些对象的特定属性值改变时，及时通知给对象的观察者（其他对象）的机制。">
+<meta property="og:updated_time" content="2016-07-11T02:29:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发之——KVO">
+<meta name="twitter:description" content="引子KVO：即Key-Value-Observer，键值观测模式，它是一种允许当某些对象的特定属性值改变时，及时通知给对象的观察者（其他对象）的机制。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6284716645889869000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> iOS开发之——KVO | 大脸儿 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3188724465a6f7695bd8b4ae49fbe857";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">大脸儿</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">hexintao</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS开发之——KVO
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-10T20:58:55+08:00" content="2016-07-10">
+              2016-07-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS-Development/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS开发</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/10/iOS开发之——KVO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/10/iOS开发之——KVO/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/10/iOS开发之——KVO/" class="leancloud_visitors" data-flag-title="iOS开发之——KVO">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>KVO：即Key-Value-Observer，键值观测模式，它是一种允许当某些对象的特定属性值改变时，及时通知给对象的观察者（其他对象）的机制。<br><a id="more"></a></p>
+<h2 id="观察者的注册和移除"><a href="#观察者的注册和移除" class="headerlink" title="观察者的注册和移除"></a>观察者的注册和移除</h2><p>KVO的大致流程包括：给要监听的属性所属的类添加观察者；接收到属性改变的通知后进行处理；处理完之后解除观察者三大步骤。流程很简单，就像要把大象装进冰箱总共需几步类似。其中，一对一代表对非集合类的属性监听，一对多代表对集合类的属性监听。</p>
+<h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><p>注册方法：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">[person addObserver:observer</span><br><span class="line">             forKeyPath:<span class="string">@"age"</span></span><br><span class="line">                options:<span class="built_in">NSKeyValueObservingOptionNew</span></span><br><span class="line">                context:<span class="literal">NULL</span>];</span><br></pre></td></tr></table></figure>
+<p>各个参数的意义很明了。分别依次是：<strong>被观察类的实例对象，观察者类的实例对象，被观察的属性名称，观察选项，额外参数</strong>。</p>
+<h3 id="注册选项"><a href="#注册选项" class="headerlink" title="注册选项"></a>注册选项</h3><p>注册选项包括四个，它们的名字和效果依次是：</p>
+<ul>
+<li>NSKeyValueObservingOptionNew：通知观察者属性发生变化时的新值；</li>
+<li>NSKeyValueObservingOptionOld：通知观察者属性发生变化时之前的旧值；</li>
+<li>NSKeyValueObservingOptionInitial：在注册观察者方法（<code>addObserver:observer</code>）未返回时就会开始发送通知，因为被观察者的初始化（initial value）对于观察者来说也是新变化的值；</li>
+<li>NSKeyValueObservingOptionPrior：发送两条通知，也就是当属性值即将要发生变化时，即下边要说的<code>willChangeValueForKey</code>触发时间相对应，预先发送给观察者一条通知，待属性值改变之后跟上述三个选项一样还会发出通知。</li>
+</ul>
+<h3 id="通知的处理"><a href="#通知的处理" class="headerlink" title="通知的处理"></a>通知的处理</h3><p>观察者收到通知后，需要通过特定的方法进行处理，样例代码：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath</span><br><span class="line">                      ofObject:(<span class="keyword">id</span>)object</span><br><span class="line">                        change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *,<span class="keyword">id</span>&gt; *)change</span><br><span class="line">                       context:(<span class="keyword">void</span> *)context</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, change);</span><br><span class="line">    <span class="keyword">if</span> ([keyPath isEqualToString:<span class="string">@"name"</span>])</span><br><span class="line">    &#123;</span><br><span class="line">		<span class="comment">//通知事件的处理</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@的名字发生了变化！%@"</span>, object, change);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法一定要在观察者的类中进行重写。  </p>
+<h3 id="通知信息"><a href="#通知信息" class="headerlink" title="通知信息"></a>通知信息</h3><p>通知处理方法中的<code>change:(NSDictionary&lt;NSString *,id&gt; *)change</code>是一个字典类型的对象，包含了此次变化的信息，例如<code>NSKeyValueObservingOptionNew</code>选项下，一对一的属性发生变化时接收到的变化信息如下：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    kind = <span class="number">1</span>;</span><br><span class="line">    new = hexintao;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一条的<code>kind</code>是<code>NSKeyValueChange</code>类型的枚举值，它有如下四个定义：</p>
+<ul>
+<li>NSKeyValueChangeSetting：设置新值，被监听的是一对一的属性或者一对多的属性；</li>
+<li>NSKeyValueChangeInsertion：一对多的属性新插入了一个对象；</li>
+<li>NSKeyValueChangeRemoval：一对多的属性移除了一个对象；</li>
+<li>NSKeyValueChangeReplacement：一对多的属性替换了其中的某个对象。</li>
+</ul>
+<p>第二条则会根据<code>NSKeyValueObservingOptions</code>观察选项、一对一或者一对多的属性不同而不同。大致也就是显示设置的新值、变化之前的旧值或者是一对多属性的添加、移除、替换的对象和序号（index）等。具体的信息可以<code>command</code>+<code>observeValueForKeyPath</code>，查看通知处理方法的官方注释，写的非常详细。</p>
+<h3 id="移除"><a href="#移除" class="headerlink" title="移除"></a>移除</h3><p>待属性值发生变化的通知处理完毕之后，我们需要对注册的观察者进行手动解除，解除的方法是：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)anObserver</span><br><span class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="built_in">NSObject</span> *)observer</span><br><span class="line">            forKeyPath:(<span class="built_in">NSString</span> *)keyPath</span><br><span class="line">               context:(<span class="keyword">void</span> *)context</span><br></pre></td></tr></table></figure>
+<p>对没有没有进行监听的属性（keyPath）执行解除操作，会抛出异常。同样，如果对已经注册的监听属性没有执行解除操作，也会抛出异常。</p>
+<h2 id="自动通知和手动通知"><a href="#自动通知和手动通知" class="headerlink" title="自动通知和手动通知"></a>自动通知和手动通知</h2><p>如果按照以上操作步骤执行，则默认使用的是自动通知，即只要对属性值进行重新赋值（不管新值和旧值是否相同），观察者都会收到通知。而在实际应用中，有可能我们想根据自己的需要，待属性值满足我们的条件之后才给观察者发送通知，这时候我们就需要通过手动模式修改发送通知的条件和时间来达到目的了。</p>
+<h3 id="自动通知"><a href="#自动通知" class="headerlink" title="自动通知"></a>自动通知</h3><p>如上述操作，发送通知的时机和条件无法进行修改。</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//第一次修改可以正常接收到通知</span></span><br><span class="line">[person setValue:<span class="string">@"hexintao"</span> forKey:<span class="string">@"name"</span>];</span><br><span class="line"><span class="comment">//自动通知模式下，接下来这两次依然会接收到通知</span></span><br><span class="line">[person setValue:<span class="string">@"hexintao"</span> forKey:<span class="string">@"name"</span>];</span><br><span class="line">[person setValue:<span class="string">@"hexintao"</span> forKey:<span class="string">@"name"</span>];</span><br></pre></td></tr></table></figure>
+<p>当然，实际应用中，连续赋同样的值的情况不多见也不推荐，我们只是为了以此说明自动通知模式下的情况。</p>
+<h3 id="手动通知"><a href="#手动通知" class="headerlink" title="手动通知"></a>手动通知</h3><p>首先需要关闭自动通知，在被观察者的类中重写类方法：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)automaticallyNotifiesObserversOf&lt;Key&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者是：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">BOOL</span>)automaticallyNotifiesObserversForKey:(<span class="built_in">NSString</span> *)key</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">BOOL</span> automatic = <span class="literal">YES</span>;</span><br><span class="line">    <span class="keyword">if</span> ([key isEqualToString:<span class="string">@"name"</span>])</span><br><span class="line">    &#123;</span><br><span class="line">        automatic = <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        automatic = [<span class="keyword">super</span> automaticallyNotifiesObserversForKey:key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后一个方法较复杂，而且有把属性名称（<code>key</code>）拼错的风险，所以还是推荐使用第一种方法。<br>接下来，要在需要发出通知的地方手动调用两个方法，这个例子中我们就取属性值的<code>setter</code>方法：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)setName:(<span class="built_in">NSString</span> *)name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (name != _name)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//子类不能重写这两个方法，否则无法完成手动触发KVO</span></span><br><span class="line">        <span class="comment">//通过改变这两个方法的位置，可以自定义KVO触发的条件</span></span><br><span class="line">        [<span class="keyword">self</span> willChangeValueForKey:<span class="string">@"name"</span>];</span><br><span class="line">        _name = name;</span><br><span class="line">        [<span class="keyword">self</span> didChangeValueForKey:<span class="string">@"name"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述两个方法一定要成对调用才会成功发出通知。<br>刚才那个例子：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//第一次修改可以正常接收到通知</span></span><br><span class="line">[person setValue:<span class="string">@"hexintao"</span> forKey:<span class="string">@"name"</span>];</span><br><span class="line"><span class="comment">//手动通知模式下，接下来这两次不会接收到通知</span></span><br><span class="line">[person setValue:<span class="string">@"hexintao"</span> forKey:<span class="string">@"name"</span>];</span><br><span class="line">[person setValue:<span class="string">@"hexintao"</span> forKey:<span class="string">@"name"</span>];</span><br></pre></td></tr></table></figure>
+<h2 id="依赖键的注册"><a href="#依赖键的注册" class="headerlink" title="依赖键的注册"></a>依赖键的注册</h2><p>有时候，我们监听的某个属性值可能会依赖于其他多个属性，只要其他属性发生了改变都会导致我们监听的属性发生变化，这种就叫做依赖键。例如，在<code>Person</code>类中有一个<code>personInfo</code>的属性，它返回的是对象的<code>name</code>和<code>age</code>的组合：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">NSString</span> *)personInfo</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"person's name:%@ age:%d"</span>, <span class="keyword">self</span>.name, <span class="keyword">self</span>.age];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们对<code>personInfo</code>进行监听，则<code>name</code>和<code>age</code>的变化也会导致<code>personInfo</code>发生变化，这时候我们就需要设置依赖键。</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">NSSet</span> *)keyPathsForValuesAffectingPersonInfo</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"name"</span>, <span class="string">@"age"</span>, <span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再对<code>personInfo</code>进行注册监听，之后如果我们对<code>name</code>或者<code>age</code>的值进行修改的时候，观察者就会收到这样的通知：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">CollectionViewTest[<span class="number">742</span>:<span class="number">17933</span>] &#123;</span><br><span class="line">    kind = <span class="number">1</span>;</span><br><span class="line">    new = <span class="string">"person's name:hexintao age:0"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是当关联属性中的任何一个发生了变化，我们监听的这个属性就会收到通知，说明其值发生了变化。</p>
+<h2 id="集合属性的监听"><a href="#集合属性的监听" class="headerlink" title="集合属性的监听"></a>集合属性的监听</h2><h3 id="集合属性整体还是部分？"><a href="#集合属性整体还是部分？" class="headerlink" title="集合属性整体还是部分？"></a>集合属性整体还是部分？</h3><p>一对一属性的监听相对来说比较简单，只要值发生了变化我们收到通知进行处理即可。对于一对多集合类的属性来说，牵扯到是监听整个集合发生的变化还是其中元素的变化？这两种行为都可以通过KVO监听到，不过日常使用来说，我们更倾向于监听后者。<br>对于集合属性，正常的添加或删除对象的操作并不能触发KVO，例如<code>[person.personFriends addObject:@&quot;2in&quot;]</code>，观察者并不会收到变化通知，不过对于集合属性整体的改变，例如<code>person.personFriends = [[NSMutableArray alloc]init]</code>，观察者可以正常收到通知。不过我们重点讨论通过特定的方法监听集合属性中对象的变化。大致分为两种方法：</p>
+<h4 id="手动监听"><a href="#手动监听" class="headerlink" title="手动监听"></a>手动监听</h4><p>集合属性的手动监听即：在被监听的类中重写一些修改集合元素的方法，之后调用这些方法对属性进行修改就可以触发KVO监听。<br>我们可以根据需要实现：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//插入对象</span></span><br><span class="line">- (<span class="keyword">void</span>)insertObject:(<span class="keyword">id</span>)object <span class="keyword">in</span>&lt;Key&gt;AtIndex:(<span class="built_in">NSUInteger</span>)index</span><br><span class="line"><span class="comment">//移除对象</span></span><br><span class="line">-(<span class="keyword">void</span>)removeObjectFrom&lt;Key&gt;AtIndex:(<span class="built_in">NSUInteger</span>)index</span><br></pre></td></tr></table></figure>
+<p>具体的操作元素的方法可见官方手册：<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueCoding/Articles/AccessorConventions.html#//apple_ref/doc/uid/20002174-178830-BAJEDEFB" target="_blank" rel="external">KVC官方指导</a><br>之后我们通过调用重写后的方法修改集合属性时即可触发KVO。</p>
+<h4 id="自动监听"><a href="#自动监听" class="headerlink" title="自动监听"></a>自动监听</h4><p>自动监听大致是：通过<code>mutableArrayValueForKey</code>方法获得一个可变对象的代理，对其进行修改即可自动触发KVO。而<code>valueForKey</code>返回的则是不可变对象。<br>使用样例：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">[[person mutableArrayValueForKey:<span class="string">@"personFriends"</span>] addObject:<span class="string">@"3in"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 但是如果是将上述操作赋值给一个可变数组，再调用正常的类似于addObject方法将不会触发KVO监听。</span></span><br><span class="line"><span class="built_in">NSMutableArray</span> *friends = [person mutableArrayValueForKey:<span class="string">@"personFriends"</span>];</span><br><span class="line"><span class="comment">//不能触发KVO模式</span></span><br><span class="line">[person.personFriends addObject:<span class="string">@"4in"</span>];  </span><br><span class="line"></span><br><span class="line"><span class="comment">//这两个方法能触发KVO，但是friends和person.personFriends指向的并不是同一个对象，不过其内容却完全一样，</span></span><br><span class="line"><span class="comment">//对friends操作会影响到person.personFriends的值，反过来也是如此！</span></span><br><span class="line">[friends insertObject:<span class="string">@"5in"</span> atIndex:<span class="number">0</span>];  <span class="comment">//可以触发KVO</span></span><br><span class="line">[friends removeObjectAtIndex:<span class="number">0</span>];  <span class="comment">//可以触发KVO</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html" target="_blank" rel="external">Apple KVO官方手册</a><br><a href="https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=9&amp;ved=0ahUKEwiZ9tW---jNAhVs5IMKHTI-AwoQFghXMAg&amp;url=http%3a%2f%2fnshipster%2ecn%2fkey-value-observing%2f&amp;usg=AFQjCNFprZJAqSav-dip36Gmq8D2oQVR-A&amp;sig2=DGtyGssCcj_n3oqMM_uQuA" target="_blank" rel="external">NSHipster KVO</a><br><a href="http://dijkst.github.io/blog/2013/06/21/ke-bian-shu-zu-zai-kvozhong-de-shi-xian/" target="_blank" rel="external">可变对象在KVO中的监听</a><br><a href="http://www.cnblogs.com/gatsbywang/p/5210031.html" target="_blank" rel="external">KVO详解</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/Objective-C/" rel="tag">#Objective-C</a>
+          
+            <a href="/tags/KVO/" rel="tag">#KVO</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/06/UICollectionView的一些坑/" rel="next" title="iOS开发之——UICollectionView的一些坑">
+                <i class="fa fa-chevron-left"></i> iOS开发之——UICollectionView的一些坑
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/10/iOS开发之——KVO/"
+           data-title="iOS开发之——KVO" data-url="http://yoursite.com/2016/07/10/iOS开发之——KVO/">
+      </div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="dalianer" />
+          <p class="site-author-name" itemprop="name">dalianer</p>
+          <p class="site-description motion-element" itemprop="description">大脸儿的成长记录</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hexintao" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者的注册和移除"><span class="nav-number">2.</span> <span class="nav-text">观察者的注册和移除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册"><span class="nav-number">2.1.</span> <span class="nav-text">注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注册选项"><span class="nav-number">2.2.</span> <span class="nav-text">注册选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知的处理"><span class="nav-number">2.3.</span> <span class="nav-text">通知的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知信息"><span class="nav-number">2.4.</span> <span class="nav-text">通知信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除"><span class="nav-number">2.5.</span> <span class="nav-text">移除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动通知和手动通知"><span class="nav-number">3.</span> <span class="nav-text">自动通知和手动通知</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自动通知"><span class="nav-number">3.1.</span> <span class="nav-text">自动通知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动通知"><span class="nav-number">3.2.</span> <span class="nav-text">手动通知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖键的注册"><span class="nav-number">4.</span> <span class="nav-text">依赖键的注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合属性的监听"><span class="nav-number">5.</span> <span class="nav-text">集合属性的监听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#集合属性整体还是部分？"><span class="nav-number">5.1.</span> <span class="nav-text">集合属性整体还是部分？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#手动监听"><span class="nav-number">5.1.1.</span> <span class="nav-text">手动监听</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动监听"><span class="nav-number">5.1.2.</span> <span class="nav-text">自动监听</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dalianer—>You don’t change, you won’t change!</span>
+</div>
+
+<div class="powered-by">
+  由 Hexo 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+    NexT.Mist
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"dalianer"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qTC2lKnjgeMyQWqFztPA4ppN-gzGzoHsz", "CoPDrDN4NplhcYAjsrszCly9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

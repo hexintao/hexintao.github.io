@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS,UITableView,单元格,cell,重用," />
+  <meta name="keywords" content="下拉刷新,MJRefresh," />
 
 
 
@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="引子iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。">
+<meta name="description" content="引子iOS开发中，下拉刷新是一个非常常见的动画。这里主要大致总结一下系统下拉刷新、MJRefresh下拉刷新两种方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS开发之——UITableView单元格重用问题">
-<meta property="og:url" content="http://yoursite.com/2016/06/13/UITableView单元格重用问题/index.html">
+<meta property="og:title" content="iOS开发之——下拉刷新">
+<meta property="og:url" content="http://yoursite.com/2016/06/14/下拉刷新使用/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description" content="引子iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。">
-<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/UITableView%E9%87%8D%E7%94%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
-<meta property="og:updated_time" content="2016-07-10T12:59:44.000Z">
+<meta property="og:description" content="引子iOS开发中，下拉刷新是一个非常常见的动画。这里主要大致总结一下系统下拉刷新、MJRefresh下拉刷新两种方法。">
+<meta property="og:image" content="http://o8pgspaft.bkt.clouddn.com/MJRefresh%E7%BB%A7%E6%89%BF%E5%9B%BE.png">
+<meta property="og:updated_time" content="2016-07-10T13:03:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS开发之——UITableView单元格重用问题">
-<meta name="twitter:description" content="引子iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。">
-<meta name="twitter:image" content="http://o8pgspaft.bkt.clouddn.com/UITableView%E9%87%8D%E7%94%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta name="twitter:title" content="iOS开发之——下拉刷新">
+<meta name="twitter:description" content="引子iOS开发中，下拉刷新是一个非常常见的动画。这里主要大致总结一下系统下拉刷新、MJRefresh下拉刷新两种方法。">
+<meta name="twitter:image" content="http://o8pgspaft.bkt.clouddn.com/MJRefresh%E7%BB%A7%E6%89%BF%E5%9B%BE.png">
 
 
 
@@ -113,7 +113,7 @@
   };
 </script>
 
-  <title> iOS开发之——UITableView单元格重用问题 | 大脸儿 </title>
+  <title> iOS开发之——下拉刷新 | 大脸儿 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +253,7 @@
             
             
               
-                iOS开发之——UITableView单元格重用问题
+                iOS开发之——下拉刷新
               
             
           </h1>
@@ -265,8 +265,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-13T17:32:32+08:00" content="2016-06-13">
-              2016-06-13
+            <time itemprop="dateCreated" datetime="2016-06-14T14:31:38+08:00" content="2016-06-14">
+              2016-06-14
             </time>
           </span>
 
@@ -295,8 +295,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/13/UITableView单元格重用问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/13/UITableView单元格重用问题/" itemprop="commentsCount"></span>
+                <a href="/2016/06/14/下拉刷新使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/14/下拉刷新使用/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -306,7 +306,7 @@
 
           
           
-             <span id="/2016/06/13/UITableView单元格重用问题/" class="leancloud_visitors" data-flag-title="iOS开发之——UITableView单元格重用问题">
+             <span id="/2016/06/14/下拉刷新使用/" class="leancloud_visitors" data-flag-title="iOS开发之——下拉刷新">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -328,18 +328,48 @@
       
 
       
-        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>iOS开发中，UITableView是一个十分重要的角色，几乎每一个APP都离不开列表。所以列表性能的优化也是日常APP优化的重点。今天在写一个小应用的时候，出现了列表重用错误的情况，总结一下。<br><a id="more"></a></p>
-<h2 id="UITableViewCell重用机制"><a href="#UITableViewCell重用机制" class="headerlink" title="UITableViewCell重用机制"></a>UITableViewCell重用机制</h2><p>关于详细的重用机制，网上一大把，例如<a href="http://sharonhu1990.github.io/2015/10/28/%E6%B5%85%E6%9E%90UITableViewCell%E9%87%8D%E7%94%A8%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">这篇文章</a>。总的来说就一个意思：屏幕显示的是固定数目的单元格，可以把推出屏幕的单元格缓存起来，供后续加载使用，既可以加快载入速度，也可以保证内存不会大幅上升。<br><img src="http://o8pgspaft.bkt.clouddn.com/UITableView%E9%87%8D%E7%94%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="单元格重用示意图"><br>注：上传完之后才知道图片画错了，其实系统会创建屏幕能显示的cell个数再加1个单元格，也就是多创建一个，图中是单元格6也应该是创建好的，单元格7才是从缓存中读取的。</p>
-<h2 id="数据错误现象"><a href="#数据错误现象" class="headerlink" title="数据错误现象"></a>数据错误现象</h2><p>也正是因为单元格重用，假如进入缓存的单元格与将要加载的单元格显示的样式不同，则在重用的时候会发生数据错误的情况。例如之前单元格的内容显示在了新的单元格中，或者之前的单元格内容发生改变等等。</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>主要是以下3个方法：</p>
-<ol>
-<li>不重用单元格。很好理解，不过就无法利用单元格重用的种种优点了，基本可以不考虑；</li>
-<li>利用标识符将不同样式的单元格进行标记，然后根据不同的标识符分别进行重用处理；</li>
-<li>在单元格重用后，加载新的数据之前对单元格的内容进行清空。  </li>
-</ol>
-<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><h3 id="方法2："><a href="#方法2：" class="headerlink" title="方法2："></a>方法2：</h3><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *cellIdetifier = [[<span class="built_in">NSString</span> alloc]init];</span><br><span class="line">    <span class="keyword">if</span> (indexPath.row == <span class="number">0</span>) <span class="comment">//如果是第一行</span></span><br><span class="line">    &#123;</span><br><span class="line">        cellIdetifier = <span class="string">@"FirstRowCell"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cellIdetifier = <span class="string">@"NotFirstRowCell"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//从缓存池中缓存单元格</span></span><br><span class="line">    HMGHomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetifier];</span><br><span class="line">    <span class="keyword">if</span> (cell == <span class="literal">nil</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//如果为空就根据标识符新建</span></span><br><span class="line">        cell = [[HMGHomePageTableViewCell alloc]initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:cellIdetifier];</span><br><span class="line">        <span class="keyword">if</span> ([cellIdetifier isEqualToString:<span class="string">@"FirstRowCell"</span>])</span><br><span class="line">        &#123;  </span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         *  这里根据不同的标识符加载不同的控件即可</span><br><span class="line">         */</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="方法3："><a href="#方法3：" class="headerlink" title="方法3："></a>方法3：</h3><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *cellIdetifier = <span class="string">@"HomePageCell"</span>;</span><br><span class="line">    HMGHomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetifier];</span><br><span class="line">    <span class="keyword">if</span> (cell != <span class="literal">nil</span>)</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="comment">//清空cell的内容并置nil</span></span><br><span class="line">        [cell.contentView.subviews makeObjectsPerformSelector:<span class="keyword">@selector</span>(removeFromSuperview)];</span><br><span class="line">        cell = <span class="literal">nil</span>; <span class="comment">//原因见下边注解</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cell == <span class="literal">nil</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        cell = [[HMGHomePageTableViewCell alloc]initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:cellIdetifier];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>注：一开始没有将cell置nil，在执行<code>removeFromSuperview</code>方法的时候，系统会调用<code>layoutSubviews</code>方法，我在这个方法里边进行masonry添加约束，而添加约束的前提是控件一定要先添加到父视图中，绕过<code>init</code>添加到父视图的操作而直接添加约束，会异常，<code>couldn&#39;t find a common superView</code>。</p>
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>iOS开发中，下拉刷新是一个非常常见的动画。这里主要大致总结一下<strong>系统下拉刷新</strong>、<strong>MJRefresh下拉刷新</strong>两种方法。<br><a id="more"></a></p>
+<h2 id="系统下拉刷新"><a href="#系统下拉刷新" class="headerlink" title="系统下拉刷新"></a>系统下拉刷新</h2><p>&emsp;&emsp;第三方的下拉刷新一般都会封装的比较好，使用起来非常简单方便，不过在这之前，最好还是自己搞清楚系统的下拉刷新吧，也很简单。<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIRefreshControl_class/" target="_blank" rel="external">UIRefreshControl官方文档</a>。</p>
+<p>&emsp;&emsp;系统的下拉刷新主要是针对列表视图，如果下拉控件用在其他视图控制器中，结果不可预知，官方说明：</p>
+<blockquote>
+<p>NOTE</p>
+<p>Because the refresh control is specifically designed for use in a table view that’s managed by a table view controller, using it in a different context can result in undefined behavior.”</p>
+</blockquote>
+<p>UIRefreshControl的属性：  </p>
+<ul>
+<li><code>tintColor</code>：指示器的颜色，注意，只是那个菊花的颜色，不牵扯文字的颜色。</li>
+<li><code>attributedTitle</code>：指示文字。  </li>
+</ul>
+<p>两个实例方法：  </p>
+<ul>
+<li><code>- (void)beginRefreshing</code>：开始刷新，如果需要隔断时间自动刷新的话，定时器就需要调用这个方法。</li>
+<li><code>- (void)endRefreshing</code>：结束刷新。当刷新操作结束之后，调用此方法结束菊花。</li>
+</ul>
+<p>还有一个BOOL变量：</p>
+<ul>
+<li><code>BOOL refreshing</code>：当前的刷新状态。</li>
+</ul>
+<p>按照上述接口说明，创建刷新动作非常简单。</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UIRefreshControl</span> *refresh = [[<span class="built_in">UIRefreshControl</span> alloc]init];</span><br><span class="line">refresh.attributedTitle = [[<span class="built_in">NSAttributedString</span> alloc]initWithString:<span class="string">@"下拉刷新"</span>];</span><br><span class="line">refresh.tintColor = [<span class="built_in">UIColor</span> orangeColor];</span><br><span class="line">[refresh addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(pullToRefresh) forControlEvents:<span class="built_in">UIControlEventValueChanged</span>];</span><br></pre></td></tr></table></figure>
+<p>然后在<code>pullToRefresh</code>方法中执行刷新操作，并更改提示文字和刷新状态即可。</p>
+<p>iOS系统内置的下拉刷新是苹果iOS6以后才推出的一个API，主要是针对<code>TableViewController</code>增加了一个属性，<code>refreshControl</code>。系统内置的下拉刷新样式比较单一，一个菊花的形状，对外的接口可以修改菊花的颜色和显示的文字。</p>
+<h4 id="1-新建一个RefreshControl的实例变量"><a href="#1-新建一个RefreshControl的实例变量" class="headerlink" title="1. 新建一个RefreshControl的实例变量"></a>1. 新建一个<code>RefreshControl</code>的实例变量</h4><p><code>UIRefreshControl *refresh = [[UIRefreshControl alloc]init];</code></p>
+<h4 id="2-设置相关属性"><a href="#2-设置相关属性" class="headerlink" title="2. 设置相关属性"></a>2. 设置相关属性</h4><p><code>attributedTitle</code>：下拉时显示的文字；<br><code>tintColor</code>：菊花的颜色；</p>
+<h4 id="3-添加事件"><a href="#3-添加事件" class="headerlink" title="3. 添加事件"></a>3. 添加事件</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">[refresh addTarget:<span class="keyword">self</span></span><br><span class="line">                action:<span class="keyword">@selector</span>(pullToRefresh)</span><br><span class="line"> forControlEvents:<span class="built_in">UIControlEventValueChanged</span>];</span><br></pre></td></tr></table></figure>
+<p>然后在对应的事件中进行数据更新，同时也可以再次修改刷新时显示的文字和颜色。</p>
+<h4 id="4-结束刷新"><a href="#4-结束刷新" class="headerlink" title="4. 结束刷新"></a>4. 结束刷新</h4><p>通过调用<code>endRefreshing</code>方法来结束刷新状态，同时也可以再次对结束刷新时显示的文字进行修改，不过一定要记得在调用完<code>endRefreshing</code>之后要再将文字改回来，改成和初始化时一样的下拉文字。</p>
+<h2 id="MJRefresh下拉刷新"><a href="#MJRefresh下拉刷新" class="headerlink" title="MJRefresh下拉刷新"></a>MJRefresh下拉刷新</h2><p>首先，盗MJRefresh的原图，MJRefresh的类的继承关系为：<br><img src="http://o8pgspaft.bkt.clouddn.com/MJRefresh%E7%BB%A7%E6%89%BF%E5%9B%BE.png" alt="继承关系"></p>
+<h3 id="默认无动图样式"><a href="#默认无动图样式" class="headerlink" title="默认无动图样式"></a>默认无动图样式</h3><h4 id="1-新建一个MJRefreshNormalHeader的实例变量"><a href="#1-新建一个MJRefreshNormalHeader的实例变量" class="headerlink" title="1. 新建一个MJRefreshNormalHeader的实例变量"></a>1. 新建一个<code>MJRefreshNormalHeader</code>的实例变量</h4><p>通过<code>headerWithRefreshingBlock</code>或者<code>headerWithRefreshingTarget</code>两个类方法进行创建。前者刷新的时候会回调<code>block</code>块，后者则直接调用相关的<code>selector</code>。</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">MJRefreshNormalHeader *normalHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^&#123;</span><br><span class="line">       <span class="built_in">NSLog</span>(<span class="string">@"开始刷新"</span>);</span><br><span class="line">   &#125;];</span><br></pre></td></tr></table></figure>
+<h4 id="2-设置相关属性-1"><a href="#2-设置相关属性-1" class="headerlink" title="2. 设置相关属性"></a>2. 设置相关属性</h4><p>MJRefresh的下拉属性比较丰富，详细介绍可以看源码。<br><code>lastUpdatedTime</code>：<code>block</code>类型，要显示的更新时间文字；<br><code>lastUpdatedTimeLabel</code>：显示上次刷新时间的Label，可以设置显示或者隐藏，默认为显示；<br><code>stateLabel</code>：显示刷新状态的Label，默认也为显示；<br><code>- (void)setTitle:(NSString *)title forState:(MJRefreshState)state</code>：实例方法，设置不同刷新状态下的文字。</p>
+<h4 id="3-刷新"><a href="#3-刷新" class="headerlink" title="3. 刷新"></a>3. 刷新</h4><p>见1。</p>
+<h4 id="4-结束刷新-1"><a href="#4-结束刷新-1" class="headerlink" title="4. 结束刷新"></a>4. 结束刷新</h4><p>同样，控制刷新状态的方法有：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** 开始刷新 */</span></span><br><span class="line">- (<span class="keyword">void</span>)beginRefreshing;</span><br><span class="line"><span class="comment">/** 结束刷新 */</span></span><br><span class="line">- (<span class="keyword">void</span>)endRefreshing; </span><br><span class="line"><span class="comment">/** 是否正在刷新 */</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)isRefreshing;</span><br></pre></td></tr></table></figure>
+<h3 id="动图样式"><a href="#动图样式" class="headerlink" title="动图样式"></a>动图样式</h3><h4 id="1-新建一个MJRefreshGifHeader的实例变量"><a href="#1-新建一个MJRefreshGifHeader的实例变量" class="headerlink" title="1. 新建一个MJRefreshGifHeader的实例变量"></a>1. 新建一个<code>MJRefreshGifHeader</code>的实例变量</h4><p>同样是通过<code>headerWithRefreshingBlock</code>或者<code>headerWithRefreshingTarget</code>两个类方法进行创建。</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">MJRefreshGifHeader *gifHeader = [MJRefreshGifHeader headerWithRefreshingTarget:<span class="keyword">self</span> refreshingAction:<span class="keyword">@selector</span>(pullToRefresh)];</span><br></pre></td></tr></table></figure>
+<h4 id="2-设置相关属性-2"><a href="#2-设置相关属性-2" class="headerlink" title="2. 设置相关属性"></a>2. 设置相关属性</h4><p>因为是动图样式，所以多了一个设置图片的方法，第一个参数是需要动画显示的图片数组，第二个参数是刷新的状态，枚举值，分别有空闲状态、下拉状态、正在刷新状态等。<br><code>[gifHeader setImages:refreshImages forState:MJRefreshStatePulling]</code><br>其余属性见上一个2。</p>
+<h4 id="3-刷新-1"><a href="#3-刷新-1" class="headerlink" title="3. 刷新"></a>3. 刷新</h4><p>见1。</p>
+<h4 id="4-结束刷新-2"><a href="#4-结束刷新-2" class="headerlink" title="4. 结束刷新"></a>4. 结束刷新</h4><p>见上一个4。</p>
 
       
     </div>
@@ -361,15 +391,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
+            <a href="/tags/下拉刷新/" rel="tag">#下拉刷新</a>
           
-            <a href="/tags/UITableView/" rel="tag">#UITableView</a>
-          
-            <a href="/tags/单元格/" rel="tag">#单元格</a>
-          
-            <a href="/tags/cell/" rel="tag">#cell</a>
-          
-            <a href="/tags/重用/" rel="tag">#重用</a>
+            <a href="/tags/MJRefresh/" rel="tag">#MJRefresh</a>
           
         </div>
       
@@ -378,16 +402,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/08/iOS XML:json数据解析/" rel="next" title="iOS开发之——XML/json数据解析">
-                <i class="fa fa-chevron-left"></i> iOS开发之——XML/json数据解析
+              <a href="/2016/06/13/UITableView单元格重用问题/" rel="next" title="iOS开发之——UITableView单元格重用问题">
+                <i class="fa fa-chevron-left"></i> iOS开发之——UITableView单元格重用问题
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/06/14/下拉刷新使用/" rel="prev" title="iOS开发之——下拉刷新">
-                iOS开发之——下拉刷新 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/07/06/UICollectionView的一些坑/" rel="prev" title="iOS开发之——UICollectionView的一些坑">
+                iOS开发之——UICollectionView的一些坑 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -414,8 +438,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/13/UITableView单元格重用问题/"
-           data-title="iOS开发之——UITableView单元格重用问题" data-url="http://yoursite.com/2016/06/13/UITableView单元格重用问题/">
+      <div class="ds-thread" data-thread-key="2016/06/14/下拉刷新使用/"
+           data-title="iOS开发之——下拉刷新" data-url="http://yoursite.com/2016/06/14/下拉刷新使用/">
       </div>
     
   </div>
@@ -516,7 +540,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableViewCell重用机制"><span class="nav-number">2.</span> <span class="nav-text">UITableViewCell重用机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据错误现象"><span class="nav-number">3.</span> <span class="nav-text">数据错误现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">4.</span> <span class="nav-text">解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码"><span class="nav-number">5.</span> <span class="nav-text">示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2："><span class="nav-number">5.1.</span> <span class="nav-text">方法2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法3："><span class="nav-number">5.2.</span> <span class="nav-text">方法3：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统下拉刷新"><span class="nav-number">2.</span> <span class="nav-text">系统下拉刷新</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-新建一个RefreshControl的实例变量"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 新建一个RefreshControl的实例变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-设置相关属性"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 设置相关属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-添加事件"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 添加事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-结束刷新"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. 结束刷新</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MJRefresh下拉刷新"><span class="nav-number">3.</span> <span class="nav-text">MJRefresh下拉刷新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#默认无动图样式"><span class="nav-number">3.1.</span> <span class="nav-text">默认无动图样式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-新建一个MJRefreshNormalHeader的实例变量"><span class="nav-number">3.1.1.</span> <span class="nav-text">1. 新建一个MJRefreshNormalHeader的实例变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-设置相关属性-1"><span class="nav-number">3.1.2.</span> <span class="nav-text">2. 设置相关属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-刷新"><span class="nav-number">3.1.3.</span> <span class="nav-text">3. 刷新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-结束刷新-1"><span class="nav-number">3.1.4.</span> <span class="nav-text">4. 结束刷新</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动图样式"><span class="nav-number">3.2.</span> <span class="nav-text">动图样式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-新建一个MJRefreshGifHeader的实例变量"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 新建一个MJRefreshGifHeader的实例变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-设置相关属性-2"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 设置相关属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-刷新-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 刷新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-结束刷新-2"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. 结束刷新</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
