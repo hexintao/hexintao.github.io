@@ -84,19 +84,16 @@
 
 
 
-<meta name="description" content="1. 为什么要进行数据迁移？在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。
-2. CoreDa">
+<meta name="description" content="1. 为什么要进行数据迁移？在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS开发之——CoraData的数据迁移">
 <meta property="og:url" content="http://yoursite.com/2016/07/15/iOS开发之——CoraData的数据迁移/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description" content="1. 为什么要进行数据迁移？在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。
-2. CoreDa">
-<meta property="og:updated_time" content="2016-07-16T08:41:50.000Z">
+<meta property="og:description" content="1. 为什么要进行数据迁移？在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。">
+<meta property="og:updated_time" content="2016-08-01T09:45:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS开发之——CoraData的数据迁移">
-<meta name="twitter:description" content="1. 为什么要进行数据迁移？在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。
-2. CoreDa">
+<meta name="twitter:description" content="1. 为什么要进行数据迁移？在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。">
 
 
 
@@ -329,7 +326,7 @@
       
 
       
-        <h2 id="1-为什么要进行数据迁移？"><a href="#1-为什么要进行数据迁移？" class="headerlink" title="1. 为什么要进行数据迁移？"></a>1. 为什么要进行数据迁移？</h2><p>在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。</p>
+        <h2 id="1-为什么要进行数据迁移？"><a href="#1-为什么要进行数据迁移？" class="headerlink" title="1. 为什么要进行数据迁移？"></a>1. 为什么要进行数据迁移？</h2><p>在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。<br><a id="more"></a></p>
 <h2 id="2-CoreData的迁移方式"><a href="#2-CoreData的迁移方式" class="headerlink" title="2. CoreData的迁移方式"></a>2. CoreData的迁移方式</h2><h3 id="2-1-轻量级迁移"><a href="#2-1-轻量级迁移" class="headerlink" title="2.1 轻量级迁移"></a>2.1 轻量级迁移</h3><p>自动完成存储区的迁移工作。设置方法：</p>
 <figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span> *options = @&#123;</span><br><span class="line">	                      <span class="built_in">NSMigratePersistentStoresAutomaticallyOption</span>:@YES,</span><br><span class="line">	                      <span class="built_in">NSInferMappingModelAutomaticallyOption</span>:@NO,</span><br><span class="line">	                      <span class="built_in">NSSQLitePragmasOption</span>: @&#123;<span class="string">@"journal_mode"</span>: <span class="string">@"DELETE"</span>&#125;</span><br><span class="line">	                      &#125;;</span><br><span class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</span><br><span class="line">_store = [_coordinator addPersistentStoreWithType:<span class="built_in">NSSQLiteStoreType</span></span><br><span class="line">                                    configuration:<span class="literal">nil</span></span><br><span class="line">                                              URL:[<span class="keyword">self</span> storeURL]</span><br><span class="line">                                          options:options</span><br><span class="line">                                            error:&amp;error];</span><br></pre></td></tr></table></figure>
 <p>主要就是以下两个设置选项：<code>NSMigratePersistentStoresAutomaticallyOption</code>：如果是<code>@YES</code>，<code>Core Data</code>就会试着把低版本的（也就是与当前模型不兼容的）持久化存储区迁移到最新版本的模型；<br><code>NSInferMappingModelAutomaticallyOption</code>如果是<code>@YES</code>，<code>Core Data</code>就会试着以最为合理的方式自动推断出源模型实体（source model entity）中的某个属性到底对应于“目标模型实体”（destination model entity）中的哪一个属性。<br>把上述两个选项都打开并传递给<code>NSPersistentStoreCoordinator</code>，这种迁移方式就叫做轻量级迁移。假如在开发<code>Core Data</code>程序时使用了<code>iCloud</code>，那么只能采用这种迁移方式。</p>
