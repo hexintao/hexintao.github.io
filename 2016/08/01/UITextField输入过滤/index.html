@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS开发,下拉刷新,pull,refresh,渐变,banner," />
+  <meta name="keywords" content="iOS,UITextField," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="引子iOS中利用系统自带的属性设置渐变的横幅。">
+<meta name="description" content="引子今儿随便写小demo的时候，想让UITextField过滤掉一些输入的条件，做一个记录，方便以后查阅。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS开发之——下拉刷新和渐变横幅">
-<meta property="og:url" content="http://yoursite.com/2016/05/30/iOS渐变横幅/index.html">
+<meta property="og:title" content="UITextField输入过滤">
+<meta property="og:url" content="http://yoursite.com/2016/08/01/UITextField输入过滤/index.html">
 <meta property="og:site_name" content="大脸儿">
-<meta property="og:description" content="引子iOS中利用系统自带的属性设置渐变的横幅。">
-<meta property="og:updated_time" content="2016-07-10T13:04:32.000Z">
+<meta property="og:description" content="引子今儿随便写小demo的时候，想让UITextField过滤掉一些输入的条件，做一个记录，方便以后查阅。">
+<meta property="og:updated_time" content="2016-08-01T09:53:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS开发之——下拉刷新和渐变横幅">
-<meta name="twitter:description" content="引子iOS中利用系统自带的属性设置渐变的横幅。">
+<meta name="twitter:title" content="UITextField输入过滤">
+<meta name="twitter:description" content="引子今儿随便写小demo的时候，想让UITextField过滤掉一些输入的条件，做一个记录，方便以后查阅。">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> iOS开发之——下拉刷新和渐变横幅 | 大脸儿 </title>
+  <title> UITextField输入过滤 | 大脸儿 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +251,7 @@
             
             
               
-                iOS开发之——下拉刷新和渐变横幅
+                UITextField输入过滤
               
             
           </h1>
@@ -263,8 +263,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-30T20:00:49+08:00" content="2016-05-30">
-              2016-05-30
+            <time itemprop="dateCreated" datetime="2016-08-01T17:24:47+08:00" content="2016-08-01">
+              2016-08-01
             </time>
           </span>
 
@@ -293,8 +293,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/30/iOS渐变横幅/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/iOS渐变横幅/" itemprop="commentsCount"></span>
+                <a href="/2016/08/01/UITextField输入过滤/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/01/UITextField输入过滤/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -304,7 +304,7 @@
 
           
           
-             <span id="/2016/05/30/iOS渐变横幅/" class="leancloud_visitors" data-flag-title="iOS开发之——下拉刷新和渐变横幅">
+             <span id="/2016/08/01/UITextField输入过滤/" class="leancloud_visitors" data-flag-title="UITextField输入过滤">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -326,19 +326,25 @@
       
 
       
-        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>iOS中利用系统自带的属性设置渐变的横幅。<br><a id="more"></a></p>
-<h3 id="tableView的渐变banner（横幅）"><a href="#tableView的渐变banner（横幅）" class="headerlink" title="tableView的渐变banner（横幅）"></a>tableView的渐变banner（横幅）</h3><p>UITableView是UIScrollView的子类，所以后者有的属性，tableView都有，所以我们可以通过代理方法：<br><code>- (void)scrollViewDidScroll:(UIScrollView *)scrollView</code>，通过滑动的偏移量来设置banner的透明度。至于设置系数，我是这么做：先大致想好需要在哪一段位移中改变alpha值，然后选取两个端点，建立一个二元一次方程组，联立求解即可。</p>
-<p>如果不想让横幅跟着移动，那也可以在这个方法里实时调整banner的y值。</p>
-<h3 id="颜色渐变"><a href="#颜色渐变" class="headerlink" title="颜色渐变"></a>颜色渐变</h3><p>iOS有比较简单的生成颜色渐变的方法——CAGradientLayer。<a href="https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CAGradientLayer_class/" target="_blank" rel="external">官方文档</a>。它包括以下属性：</p>
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>今儿随便写小demo的时候，想让UITextField过滤掉一些输入的条件，做一个记录，方便以后查阅。<br><a id="more"></a><br>具体要求如下：</p>
 <ul>
-<li>colors：CGColor颜色数组，也就是想渐变的颜色值。</li>
-<li>locations：分界点。范围是0–1，默认值是nil。这个值如果设置的话需要和colors数组中的颜色个数相等，否则不会出来渐变的效果。相当于某种颜色在容器中开始和结束渲染的比例。</li>
-<li>startPoint：开始点。默认值是(0.5,0.0)。</li>
-<li>endPoint：结束点。默认值是 (0.5,1.0)。这两个构成一个组合，可以设置颜色的渲染方向。例如(0,0)和(1,1)就可以设置颜色沿着对角线的方向渲染。</li>
-<li>type：渲染类型。枚举值。我暂时没用到。</li>
+<li>只能输入数字；</li>
+<li>最多输入两位小数；</li>
+<li>最多输入六位整数，且能继续输入两位小数，但不能输入整数；</li>
+<li>不能重复输入小数点；</li>
+<li>不能在小数点前边输入多个0。</li>
 </ul>
-<p>初始化：</p>
-<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">self</span>.bannerImageView = [[<span class="built_in">UIImageView</span> alloc]initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, SCREEN_W, <span class="number">60</span>)];</span><br><span class="line">    <span class="keyword">self</span>.bannerImageView.contentMode = <span class="built_in">UIViewContentModeScaleAspectFill</span>;</span><br><span class="line">    <span class="keyword">self</span>.bannerGradientLayer = [<span class="built_in">CAGradientLayer</span> layer];</span><br><span class="line">    <span class="keyword">self</span>.bannerGradientLayer.frame = <span class="keyword">self</span>.bannerImageView.bounds;</span><br><span class="line">    <span class="keyword">self</span>.bannerGradientLayer.colors = @[</span><br><span class="line">                                        (<span class="keyword">id</span>)[<span class="built_in">UIColor</span> colorWithWhite:<span class="number">0.2</span> alpha:<span class="number">0.6</span>].CGColor,</span><br><span class="line"><span class="comment">//                                        (id)[UIColor blueColor].CGColor,</span></span><br><span class="line"><span class="comment">//                                        (id)[UIColor redColor].CGColor,</span></span><br><span class="line">                                        (<span class="keyword">id</span>)[<span class="built_in">UIColor</span> clearColor].CGColor</span><br><span class="line">                                        ];</span><br><span class="line">    <span class="comment">//如果是@[@1.0,@1.0],则没有渐变效果，整个就是第一种颜色的效果。我根据这一点设置banner的渐渐出现的效果。</span></span><br><span class="line">    <span class="keyword">self</span>.bannerGradientLayer.locations = @[@<span class="number">0</span>, @<span class="number">1.0</span>];</span><br><span class="line">    [<span class="keyword">self</span>.bannerImageView.layer addSublayer:<span class="keyword">self</span>.bannerGradientLayer];</span><br></pre></td></tr></table></figure>
+<h2 id="需求解决"><a href="#需求解决" class="headerlink" title="需求解决"></a>需求解决</h2><p>首先，应该在哪个方法处理？答案是：<br><code>- textField:shouldChangeCharactersInRange:replacementString:</code>。<br>这是一个UITextField的代理方法，关于这个方法，苹果官方文档指出，此乃过滤输入的最好时机：  </p>
+<blockquote>
+<p>Discussion<br>The text field calls this method whenever user actions cause its text to change. Use this method to validate text as it is typed by the user. For example, you could use this method to prevent the user from entering anything but numerical values.</p>
+</blockquote>
+<p>这个方法是当<code>UITextField</code>中的文字要发生改变时调用的。如果返回NO则当前<code>UITextField</code>中的文字将不再响应输入，反之则可以正常响应输入。  </p>
+<h4 id="1-输入数字"><a href="#1-输入数字" class="headerlink" title="1. 输入数字"></a>1. 输入数字</h4><p>这个我通过设置键盘类型达到目的（原谅我的机智。。。），当然也可以通过判断输入的字符进行处理。</p>
+<h4 id="2-两位小数"><a href="#2-两位小数" class="headerlink" title="2. 两位小数"></a>2. 两位小数</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>([textField.text rangeOfString:<span class="string">@"."</span>].location != <span class="built_in">NSNotFound</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSUInteger</span> dotLocation = [textField.text rangeOfString:<span class="string">@"."</span>].location;</span><br><span class="line">    <span class="built_in">NSUInteger</span> dotRange = range.location - dotLocation;</span><br><span class="line">    <span class="keyword">if</span> (dotRange &lt;= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>; <span class="comment">//最多输入2位小数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-六位整数"><a href="#3-六位整数" class="headerlink" title="3. 六位整数"></a>3. 六位整数</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (range.location &gt;= <span class="number">6</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> ([string isEqualToString:<span class="string">@"."</span>]) &#123;</span><br><span class="line">	    <span class="keyword">return</span> <span class="literal">YES</span>;  <span class="comment">//输入6位整数后可以继续输入小数</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	    <span class="keyword">return</span> <span class="literal">NO</span>;  <span class="comment">//最多输入6位整数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-小数点重复"><a href="#4-小数点重复" class="headerlink" title="4. 小数点重复"></a>4. 小数点重复</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> ([string rangeOfString:<span class="string">@"."</span>].location != <span class="built_in">NSNotFound</span> &amp;&amp; [textField.text rangeOfString:<span class="string">@"."</span>].location != <span class="built_in">NSNotFound</span>) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;  <span class="comment">//不能输入多个小数点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-多个0开头"><a href="#5-多个0开头" class="headerlink" title="5. 多个0开头"></a>5. 多个0开头</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (firstChar == <span class="string">'0'</span> &amp;&amp; ([textField.text rangeOfString:<span class="string">@"0"</span>].location == <span class="number">0</span> &amp;&amp; [textField.text rangeOfString:<span class="string">@"."</span>].location != <span class="number">1</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>; <span class="comment">//不能输入0000，除非是0.xx小数的形式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="6-最后整个方法的代码"><a href="#6-最后整个方法的代码" class="headerlink" title="6. 最后整个方法的代码"></a>6. 最后整个方法的代码</h4><figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)textField:(<span class="built_in">UITextField</span> *)textField shouldChangeCharactersInRange:(<span class="built_in">NSRange</span>)range replacementString:(<span class="built_in">NSString</span> *)string</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%zd===%zd====%@"</span>, range.location, range.length, string);</span><br><span class="line">    <span class="keyword">if</span> ([string length] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">unichar</span> firstChar = [string characterAtIndex:<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> ([textField.text length] == <span class="number">0</span> &amp;&amp; firstChar == <span class="string">'.'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NO</span>; <span class="comment">//不能以.开头</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (firstChar == <span class="string">'0'</span> &amp;&amp; ([textField.text rangeOfString:<span class="string">@"0"</span>].location == <span class="number">0</span> &amp;&amp; [textField.text rangeOfString:<span class="string">@"."</span>].location != <span class="number">1</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NO</span>; <span class="comment">//不能输入0000，除非是0.xx小数的形式</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ([string rangeOfString:<span class="string">@"."</span>].location != <span class="built_in">NSNotFound</span> &amp;&amp; [textField.text rangeOfString:<span class="string">@"."</span>].location != <span class="built_in">NSNotFound</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NO</span>;  <span class="comment">//不能输入多个小数点</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>([textField.text rangeOfString:<span class="string">@"."</span>].location != <span class="built_in">NSNotFound</span>) &#123;</span><br><span class="line">            <span class="built_in">NSUInteger</span> dotLocation = [textField.text rangeOfString:<span class="string">@"."</span>].location;</span><br><span class="line">            <span class="built_in">NSUInteger</span> dotRange = range.location - dotLocation;</span><br><span class="line">            <span class="keyword">if</span> (dotRange &lt;= <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">NO</span>; <span class="comment">//最多输入2位小数</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (range.location &gt;= <span class="number">6</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> ([string isEqualToString:<span class="string">@"."</span>]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">YES</span>;  <span class="comment">//输入6位整数后可以继续输入小数</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">NO</span>;  <span class="comment">//最多输入6位整数</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -360,17 +366,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS开发/" rel="tag">#iOS开发</a>
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
-            <a href="/tags/下拉刷新/" rel="tag">#下拉刷新</a>
-          
-            <a href="/tags/pull/" rel="tag">#pull</a>
-          
-            <a href="/tags/refresh/" rel="tag">#refresh</a>
-          
-            <a href="/tags/渐变/" rel="tag">#渐变</a>
-          
-            <a href="/tags/banner/" rel="tag">#banner</a>
+            <a href="/tags/UITextField/" rel="tag">#UITextField</a>
           
         </div>
       
@@ -379,17 +377,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/28/iOS自定义UIPageControl/" rel="next" title="iOS开发之——自定义UIPageControl">
-                <i class="fa fa-chevron-left"></i> iOS开发之——自定义UIPageControl
+              <a href="/2016/07/15/iOS开发之——CoraData的数据迁移/" rel="next" title="iOS开发之——CoraData的数据迁移">
+                <i class="fa fa-chevron-left"></i> iOS开发之——CoraData的数据迁移
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/08/iOS XML:json数据解析/" rel="prev" title="iOS开发之——XML/json数据解析">
-                iOS开发之——XML/json数据解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -415,8 +409,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/30/iOS渐变横幅/"
-           data-title="iOS开发之——下拉刷新和渐变横幅" data-url="http://yoursite.com/2016/05/30/iOS渐变横幅/">
+      <div class="ds-thread" data-thread-key="2016/08/01/UITextField输入过滤/"
+           data-title="UITextField输入过滤" data-url="http://yoursite.com/2016/08/01/UITextField输入过滤/">
       </div>
     
   </div>
@@ -517,7 +511,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tableView的渐变banner（横幅）"><span class="nav-number">1.1.</span> <span class="nav-text">tableView的渐变banner（横幅）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色渐变"><span class="nav-number">1.2.</span> <span class="nav-text">颜色渐变</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需求解决"><span class="nav-number">2.</span> <span class="nav-text">需求解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-输入数字"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 输入数字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-两位小数"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 两位小数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-六位整数"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 六位整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-小数点重复"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. 小数点重复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-多个0开头"><span class="nav-number">2.0.5.</span> <span class="nav-text">5. 多个0开头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-最后整个方法的代码"><span class="nav-number">2.0.6.</span> <span class="nav-text">6. 最后整个方法的代码</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
