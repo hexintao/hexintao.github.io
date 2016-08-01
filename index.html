@@ -253,6 +253,176 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/15/iOS开发之——CoraData的数据迁移/" itemprop="url">
+                  iOS开发之——CoraData的数据迁移
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-15T15:46:59+08:00" content="2016-07-15">
+              2016-07-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS-Development/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS开发</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/15/iOS开发之——CoraData的数据迁移/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/15/iOS开发之——CoraData的数据迁移/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/15/iOS开发之——CoraData的数据迁移/" class="leancloud_visitors" data-flag-title="iOS开发之——CoraData的数据迁移">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-为什么要进行数据迁移？"><a href="#1-为什么要进行数据迁移？" class="headerlink" title="1. 为什么要进行数据迁移？"></a>1. 为什么要进行数据迁移？</h2><p>在应用程序不断进行更新的过程中，其中的数据模型也可能在改变。假如是一些比较简单的改变，例如属性的默认值、验证规则、获取请求条件改变等等，这都可以直接实现。不够若是更为基础的结构上的改动，那就需要将旧的存储区迁移到新的模型中来才行。假如没有提供迁移数据所需要的映射和设置，就会造成新程序无法访问数据，或者说是两种数据存储区完全不兼容，而造成应用程序崩溃。</p>
+<h2 id="2-CoreData的迁移方式"><a href="#2-CoreData的迁移方式" class="headerlink" title="2. CoreData的迁移方式"></a>2. CoreData的迁移方式</h2><h3 id="2-1-轻量级迁移"><a href="#2-1-轻量级迁移" class="headerlink" title="2.1 轻量级迁移"></a>2.1 轻量级迁移</h3><p>自动完成存储区的迁移工作。设置方法：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span> *options = @&#123;</span><br><span class="line">	                      <span class="built_in">NSMigratePersistentStoresAutomaticallyOption</span>:@YES,</span><br><span class="line">	                      <span class="built_in">NSInferMappingModelAutomaticallyOption</span>:@NO,</span><br><span class="line">	                      <span class="built_in">NSSQLitePragmasOption</span>: @&#123;<span class="string">@"journal_mode"</span>: <span class="string">@"DELETE"</span>&#125;</span><br><span class="line">	                      &#125;;</span><br><span class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</span><br><span class="line">_store = [_coordinator addPersistentStoreWithType:<span class="built_in">NSSQLiteStoreType</span></span><br><span class="line">                                    configuration:<span class="literal">nil</span></span><br><span class="line">                                              URL:[<span class="keyword">self</span> storeURL]</span><br><span class="line">                                          options:options</span><br><span class="line">                                            error:&amp;error];</span><br></pre></td></tr></table></figure>
+<p>主要就是以下两个设置选项：<code>NSMigratePersistentStoresAutomaticallyOption</code>：如果是<code>@YES</code>，<code>Core Data</code>就会试着把低版本的（也就是与当前模型不兼容的）持久化存储区迁移到最新版本的模型；<br><code>NSInferMappingModelAutomaticallyOption</code>如果是<code>@YES</code>，<code>Core Data</code>就会试着以最为合理的方式自动推断出源模型实体（source model entity）中的某个属性到底对应于“目标模型实体”（destination model entity）中的哪一个属性。<br>把上述两个选项都打开并传递给<code>NSPersistentStoreCoordinator</code>，这种迁移方式就叫做轻量级迁移。假如在开发<code>Core Data</code>程序时使用了<code>iCloud</code>，那么只能采用这种迁移方式。</p>
+<h3 id="2-2-默认迁移方式"><a href="#2-2-默认迁移方式" class="headerlink" title="2.2 默认迁移方式"></a>2.2 默认迁移方式</h3><p>可以看到，轻量级迁移的方式实现起来比较简单方便，不过无法满足精细化迁移的要求。假如我们想将旧的实体中的某个属性连同其数据，整体迁移到新实体中的某个属性，那么轻量级的迁移方式就无法满足我们的需求了。旧实体和新实体之间的对应关系，叫做映射模型。这时候，默认迁移方式就派上用场了。<br>使用方法：</p>
+<ul>
+<li>首先，我们应将轻量级迁移中的<code>NSInferMappingModelAutomaticallyOption</code>选项设置为<code>@NO</code>，因为这个选项打开，它会检测有没有映射模型，关掉之后，可以确保使用我们接下来的映射模型进行迁移，而非系统的自动推断。  </li>
+<li>其次新建一个映射模型文件（Mapping Model），然后保存，其中的<code>SourceDataModel</code>选择旧实体，即需要进行迁移的数据源实体，<code>TargetDataModel</code>选择新实体，即数据将要迁入的实体。</li>
+<li>修改实体。选中系统没有帮我们进行自动匹配的新实体，通过右侧的属性面板，手动选择<code>Source</code>，选择完毕之后，属性的名称会自动修改为<code>OldEntityToNewEntity</code>这种形式。</li>
+<li>修改实体属性。选中新实体中我们要进行数据迁入的属性，然后修改属性后边的<code>Value Expression</code>：<code>$source.旧实体属性</code>。</li>
+</ul>
+<p>至此，迁移需要的映射模型我们已经创建好了。接下来，正常情况下，程序就会自动将我们设置的旧实体中的数据按照映射模型迁移至新实体中来。</p>
+<h3 id="2-4-迁移管理器方式"><a href="#2-4-迁移管理器方式" class="headerlink" title="2.4 迁移管理器方式"></a>2.4 迁移管理器方式</h3><p>通过迁移管理器进行数据迁移，灵活性更大，它使开发者全权掌握迁移过程中创建的文件，从而令他们能够按自己的方式来灵活处理迁移中的各种问题。使用迁移管理器的一个好处，就是可以得知数据迁移的进度，进而可以告知用户。特别是当数据库比较大，变动比较复杂时，更有必要将迁移的进度通知给用户，以免他们在数据迁移时操作手机或者误以为手机卡死等。</p>
+<h4 id="2-4-1-判断是否需要进行迁移"><a href="#2-4-1-判断是否需要进行迁移" class="headerlink" title="2.4.1 判断是否需要进行迁移"></a>2.4.1 判断是否需要进行迁移</h4><p>伪代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if(系统没有这个存储区)</span><br><span class="line">&#123;</span><br><span class="line">	直接返回，不需要进行迁移；</span><br><span class="line">&#125;</span><br><span class="line">剩余情况，则代表有存储区；</span><br><span class="line">if(新模型与现有的存储区不兼容)</span><br><span class="line">&#123;</span><br><span class="line">	返回，不需要进行迁移</span><br><span class="line">&#125;</span><br><span class="line">其他情况，需要进行迁移</span><br></pre></td></tr></table></figure>
+<p>真代码：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="comment">//如果不存在存储区，则就不需要进行迁移操作</span></span><br><span class="line"><span class="keyword">if</span> (![[<span class="built_in">NSFileManager</span> defaultManager] fileExistsAtPath:[<span class="keyword">self</span> storeURL].path])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (debug == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"SKIPPED MIGRATION: Source database missing"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</span><br><span class="line"><span class="built_in">NSDictionary</span> *sourceMetadata =</span><br><span class="line">[<span class="built_in">NSPersistentStoreCoordinator</span> metadataForPersistentStoreOfType:<span class="built_in">NSSQLiteStoreType</span> URL:storeUrl options:<span class="literal">nil</span> error:&amp;error];</span><br><span class="line"><span class="built_in">NSManagedObjectModel</span> *destinationModel = _coordinator.managedObjectModel;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//如果存储区原有的数据模型与现有的数据模型不兼容，同样不需要进行迁移</span></span><br><span class="line"><span class="keyword">if</span> ([destinationModel isConfiguration:<span class="literal">nil</span> compatibleWithStoreMetadata:sourceMetadata])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (debug == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"SKIPPED MIGRATION: Source is already compatible"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">YES</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-2-进行迁移"><a href="#2-4-2-进行迁移" class="headerlink" title="2.4.2 进行迁移"></a>2.4.2 进行迁移</h4><p>伪代码：</p>
+<ol>
+<li>收集执行数据迁移所需的信息，分别是：<br> 源模型：<code>metadataForPersistentStoreOfType</code>；<br> 目标模型：_model；<br> 映射模型：<code>mappingModelFromBundles</code>，把源模型和目标模型一并传进去即可。</li>
+<li><p>迁移。</p>
+<ul>
+<li>创建NSMigrationManger实例；</li>
+<li>设置一个临时的迁移存储区。</li>
+</ul>
+</li>
+<li><p>迁移完成，清理旧的存储区，并把新的临时存储区放回到原来的位置上，并且这新存储区的名字要和旧的一致，只有这样，<code>Core Data</code>才能使用这个新的存储区。当然，也可以将旧的存储区备份到其他地方，不过这将导致存储控件翻倍。</p>
+</li>
+</ol>
+<p>真代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">//第一步，取得源数据，目的数据区和模型图</span><br><span class="line">NSDictionary *sourceMetadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType URL:sourceStore options:nil error:&amp;error];</span><br><span class="line">NSManagedObjectModel *sourceModel = [NSManagedObjectModel mergedModelFromBundles:nil forStoreMetadata:sourceMetadata];</span><br><span class="line">NSManagedObjectModel *destinModel = _model;</span><br><span class="line">    </span><br><span class="line">NSMappingModel *mappingModel = [NSMappingModel mappingModelFromBundles:nil forSourceModel:sourceModel destinationModel:destinModel];</span><br><span class="line">    </span><br><span class="line">//第二步，执行迁移操作，假设迁移映射模型mappingModel不为空</span><br><span class="line">if (mappingModel)</span><br><span class="line">&#123;</span><br><span class="line">    NSError *error = nil;</span><br><span class="line">    NSMigrationManager *migrationManager = [[NSMigrationManager alloc]initWithSourceModel:sourceModel destinationModel:destinModel];</span><br><span class="line">	//针对迁移进度，通过KVO方式进行监听</span><br><span class="line">    [migrationManager addObserver:self forKeyPath:@&quot;migrationProgress&quot; options:NSKeyValueObservingOptionNew context:NULL];</span><br><span class="line">    NSURL *destinStore = [[self applicationStoresDirectory]URLByAppendingPathComponent:@&quot;Temp.sqlite&quot;];</span><br><span class="line">    success = [migrationManager migrateStoreFromURL:sourceStore</span><br><span class="line">                                               type:NSSQLiteStoreType</span><br><span class="line">                                            options:nil</span><br><span class="line">                                   withMappingModel:mappingModel</span><br><span class="line">                                   toDestinationURL:destinStore</span><br><span class="line">                                    destinationType:NSSQLiteStoreType</span><br><span class="line">                                 destinationOptions:nil error:&amp;error];</span><br><span class="line">    if (success)</span><br><span class="line">    &#123;</span><br><span class="line">        //迁移完成后，清理存储区</span><br><span class="line">        if ([self replaceStore:sourceStore withStore:destinStore])</span><br><span class="line">        &#123;</span><br><span class="line">            if (debug == 1)</span><br><span class="line">            &#123;</span><br><span class="line">                NSLog(@&quot;SUCCESSFULLY MIGRATED %@ to the Current Model&quot;, sourceStore.path);</span><br><span class="line">            &#125;</span><br><span class="line">            [migrationManager removeObserver:self forKeyPath:@&quot;migrationProgress&quot;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        if (debug == 1)</span><br><span class="line">        &#123;</span><br><span class="line">            NSLog(@&quot;FAILED MIGRATION:%@&quot;, error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    if (debug == 1)</span><br><span class="line">    &#123;</span><br><span class="line">        NSLog(@&quot;FAILED MIGRATION: Mapping Model is null&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">return YES;</span><br></pre></td></tr></table></figure>
+<p>其中，清理存储区的方法如下：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line"><span class="built_in">BOOL</span> success = <span class="literal">NO</span>;</span><br><span class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</span><br><span class="line"><span class="keyword">if</span> ([[<span class="built_in">NSFileManager</span> defaultManager] removeItemAtURL:old error:&amp;error])</span><br><span class="line">&#123;</span><br><span class="line">    error = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">if</span> ([[<span class="built_in">NSFileManager</span> defaultManager] moveItemAtURL:new toURL:old error:&amp;error])</span><br><span class="line">    &#123;</span><br><span class="line">        success = <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (debug == <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"FAILED to re-home new store %@"</span>, error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (debug == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"FAILED to remove old store %@: error:%@"</span>, old, error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> success;</span><br></pre></td></tr></table></figure>
+<p>其中迁移进度，我们可以在KVO监听的处理方法中进行显示：</p>
+<figure class="highlight mm"><table><tr><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath ofObject:(<span class="keyword">id</span>)object change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *,<span class="keyword">id</span>&gt; *)change context:(<span class="keyword">void</span> *)context</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> ([keyPath isEqualToString:<span class="string">@"migrationProgress"</span>])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        <span class="keyword">float</span> progress = [[change objectForKey:<span class="built_in">NSKeyValueChangeNewKey</span>] floatValue];</span><br><span class="line">            <span class="comment">//在这里，对进度进行显示</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="NSManagedObject扩展中的Delete规则"><a href="#NSManagedObject扩展中的Delete规则" class="headerlink" title="NSManagedObject扩展中的Delete规则"></a>NSManagedObject扩展中的Delete规则</h2><p>在我们使用Core Data创建相互联系的实体时，Delete Rule也是我们其中需要注意的一个点。它有四个选项可供我们选择：</p>
+<ul>
+<li>Nullify：默认选项。如果删除了某个对象，而与该对象关联的其他对象，就会把指向该对象的“关系”清空，恢复成<code>NULL</code>。</li>
+<li>Cascade：这种规则会顺着关系，将对象删除。也就是它会将与删除对象关联的对象全部删除。</li>
+<li>Deny：这种规则则会阻止开发者删除该对象。当我们经过查询，找到需要删除的对象之后，假如这个对象中关系规则是Deny，我们可以执行完删除操作之后，但是当我们将改动保存至数据库时，系统就会提示<code>validation error</code>（验证错误）。所以，如果想要删除这种对象，则应确保程序中已经没有与该对象关联的目标对象了。</li>
+<li>No Action：这是一条有点奇怪的规则。与删除对象关联的对象什么也不改变，这时候就需要开发者手动设定反向的关系，确保它们都指向有效的对象。只有在极个别的情况下才需要使用这种规则。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/10/iOS开发之——KVO/" itemprop="url">
                   iOS开发之——KVO
                 </a>
@@ -1394,139 +1564,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/17/OCRuntime/" itemprop="url">
-                  ［翻译］理解Objective-C Runtime
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-17T09:41:55+08:00" content="2016-05-17">
-              2016-05-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Translations/" itemprop="url" rel="index">
-                    <span itemprop="name">翻译</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/17/OCRuntime/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/17/OCRuntime/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/05/17/OCRuntime/" class="leancloud_visitors" data-flag-title="［翻译］理解Objective-C Runtime">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>原文地址：</strong><a href="https://cocoasamurai.blogspot.jp/2010/01/understanding-objective-c-runtime.html">https://cocoasamurai.blogspot.jp/2010/01/understanding-objective-c-runtime.html</a></p>
-<p><strong>原文作者：</strong><a href="https://www.blogger.com/profile/16010768305821496589">Colin Wheeler</a></p>
-<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>&emsp;&emsp;当人们谈到Objective-C/Cocoa时，Objective-C Runtime是一个非常容易被忽略掉的特点，这大概是因为OC语言本身是一门可以在一小段时间就能入门的语言，学习Cocoa的新手们往往也只是在Cocoa框架和怎么使用框架上埋头钻研。可是，OC Runtime的工作原理是每一个学习OC的人都至少应该了解的，而并不是仅限于知道<code>[target doMethodWith:var1];</code>在经过编译之后变成了<code>objc_msgSend(target,@selector(doMethodWith:),var1);</code>这么表层的东西。理解了OC Runtime之后，有助于我们更深入的理解OC语言本身和应用的运行机制。在我看来，不论开发经验多或少，每一位Mac/iOS开发者都能从本文获取到一点新的知识。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/17/OCRuntime/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1571,7 +1608,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1588,7 +1625,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
