@@ -1,0 +1,781 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS,spacecommander," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="“这谁写的代码，前边的空格手敲的啊，我正常换行居然没对齐？！””这个 else 是跟哪个 if 配对的卧槽”…….如果你也这样抱怨过，恭喜你，来对了，请接着往下看。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发之--手把手教你自动化整理代码">
+<meta property="og:url" content="http://yoursite.com/2017/09/03/iOS手把手教你自动化整理代码/index.html">
+<meta property="og:site_name" content="大脸儿">
+<meta property="og:description" content="“这谁写的代码，前边的空格手敲的啊，我正常换行居然没对齐？！””这个 else 是跟哪个 if 配对的卧槽”…….如果你也这样抱怨过，恭喜你，来对了，请接着往下看。">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/spacecommander-setup.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/spacecommander-setupFile.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/spacecommander-clangFormat.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/inlineBefore.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/inlineAfter.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/blockBefore.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/blockAfter.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/dictionaryBefore.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/dictionaryAfter.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/gitCommit.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/podIgnore.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/clangFormatOffOn.png">
+<meta property="og:image" content="http://yoursite.com/images/spacecommander/clang-formatInfile.png">
+<meta property="og:updated_time" content="2017-09-10T01:40:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发之--手把手教你自动化整理代码">
+<meta name="twitter:description" content="“这谁写的代码，前边的空格手敲的啊，我正常换行居然没对齐？！””这个 else 是跟哪个 if 配对的卧槽”…….如果你也这样抱怨过，恭喜你，来对了，请接着往下看。">
+<meta name="twitter:image" content="http://yoursite.com/images/spacecommander/spacecommander-setup.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6284716645889869000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> iOS开发之--手把手教你自动化整理代码 | 大脸儿 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3188724465a6f7695bd8b4ae49fbe857";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">大脸儿</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">hexintao</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS开发之--手把手教你自动化整理代码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-03T10:57:23+08:00" content="2017-09-03">
+              2017-09-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS-Development/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS开发</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/03/iOS手把手教你自动化整理代码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/03/iOS手把手教你自动化整理代码/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/03/iOS手把手教你自动化整理代码/" class="leancloud_visitors" data-flag-title="iOS开发之--手把手教你自动化整理代码">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>“这谁写的代码，前边的空格手敲的啊，我正常换行居然没对齐？！””这个 else 是跟哪个 if 配对的卧槽”…….如果你也这样抱怨过，恭喜你，来对了，请接着往下看。<br><a id="more"></a><br>谁都想自己写的代码清清爽爽，也都想自己工作中看到的代码清清爽爽，或者最起码尽量风格统一。但是代码格式这种重复劳动的问题，如果旁边坐一个美女帮我添一个空格，做一个换行该多好啊。如果你是这样想的，可以右上角xx出门找x家、x天，地上小纸片打个电话谈价钱去了。我这里要分享的是用 <a href="https://github.com/square/spacecommander" target="_blank" rel="external">spacecommander</a> 工具在 Xcode 8.x 时代实现对 <code>OC</code> 的自动化，另外 <code>spacecommander</code> 跟 <code>git</code> 更配哦，好了，飙车正式开始！</p>
+<h2 id="1-准备工作和环境配置"><a href="#1-准备工作和环境配置" class="headerlink" title="1. 准备工作和环境配置"></a>1. 准备工作和环境配置</h2><h4 id="1-1-下载源文件"><a href="#1-1-下载源文件" class="headerlink" title="1.1 下载源文件"></a>1.1 下载源文件</h4><p>从上边的 <code>github</code> 链接下载 <code>spacecommander</code> 源文件并解压。你可以将文件放到自己项目的工程目录下，这样 <code>git</code> 可以将 <code>spacecommander</code> 源文件自动同步到远端，其他同事更新代码之后只需要执行命令即可，更方便。我这里是先放在了电脑的文稿目录下。   </p>
+<h4 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h4><p>使用命令行 <code>cd</code> 到工程目录，然后使用 <code>spacecommander</code> 目录下的 <code>setup-repo.sh</code> 初始化环境。命令类似于：  <code>$ /Users/mac/Documents/spacecommander/setup-repo.sh</code>，<br>前边是 <code>spacecommander</code> 源文件所在的目录，自行替换即可，或者更简单的直接将 <code>setup-repo.sh</code> 文件拖拽到命令行，系统会自动生成路径信息，然后直接回车即可。之后你的命令行大概会是这个样子：<img src="/images/spacecommander/spacecommander-setup.png" alt="set-up">而你的工程目录下会多出这么三个鬼东西：<img src="/images/spacecommander/spacecommander-setupFile.png" alt="setupFiles"></p>
+<ol>
+<li>左起第一个是个快捷方式，指向我们刚刚解压的 <code>spacecommander</code> 源文件中的 <code>.clang-format</code> 脚本。使用编辑器打开这个脚本你会发现<img src="/images/spacecommander/spacecommander-clangFormat.png" alt="clangFormat">其实我们要格式化的样式都是在这文件中定义的，包括基于的代码风格（ Google / LLVM ）、tab 按键缩进的长度等等。不明白某个选项的可以搜索或者直接搜 “ <code>clang-format</code> 配置”。这里不赘述。或者可以自己写个小 demo，弄几个 <code>if-else</code>、<code>for</code>循环、<code>block</code> ，方法和属性等，试着修改一下这个文件，看格式化后是什么样子，印象更深刻，活着就是折腾嘛。   </li>
+<li>中间是一个 <code>.git</code> 的文件夹，点进去会发现有一个<code>hooks</code> 的文件夹，继续点进去有一个 <code>pre-commit</code> 的可执行文件。<code>hooks</code> 顾名思义，钩子的意思，详见<a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">git 钩子官方说明</a>。说白了，其实就类似于是 <code>OC</code> 中的 <code>block</code> 模式，使用 <code>git</code> 的小伙伴们对 <code>git commit</code> 提交代码肯定再熟悉不过了，不过，假如我们想在提交每次提交代码之前进行一些操作，例如：格式化代码 : ) 。那这个钩子就相当于是 git 官方给我们暴露出来的 <code>block</code> 回调，可以在每次执行 <code>commit</code> 之前自动调用，从而达到自动化的目的。   </li>
+<li>看到最后一个文件，是不是特别熟悉？和我们工程目录下的忽略文件一毛一样！它的作用就是忽略文件（呸！废话！）。其实这个是因为我初始化时的目录没跟我原有的 <code>.gitignore</code> 所在目录一致导致的。也就是说，<code>setup-repo.sh</code> 会自动检测当前目录下是否有 <code>.gitignore</code> 文件，如果有就会自动在后边追加 <code>.clang-format</code>，如果没有就会新建一个忽略文件并添加 <code>.clang-format</code>。目的当然是为了不同步 <code>.clang-format</code> 文件。因为 <code>.clang-format</code> 只是个快捷方式，当被同步到其他电脑上时，这个快捷方式很大程度上是无效的，所以就不需要被同步到远端。所以需不需要这个文件被忽略，取决于你的 <code>spacecommander</code> 源文件的目录。如果 <code>spacecommander</code> 也在你的工程目录下并且被同步到了远端，那这个快捷方式就可以不用忽略，这样其他的协作小伙伴 <code>pull</code> 之后什么操作都不用，就可以直接使用自动整理代码的功能。否则就不需要同步，到时候喊你的小伙伴再看一遍这篇文章即可，我真是个心机婊啊 : )。    <h2 id="2-整理代码"><a href="#2-整理代码" class="headerlink" title="2. 整理代码"></a>2. 整理代码</h2><h4 id="2-1-常用的格式化命令"><a href="#2-1-常用的格式化命令" class="headerlink" title="2.1 常用的格式化命令"></a>2.1 常用的格式化命令</h4>看到现在是不是对于自动化整理代码的流程大致有印象了呢。接下来就是见证奇迹的时刻。在 <code>spacecommander</code> 的源文件目录下，除了 <code>setup-repo.sh</code> 之外，其实还有好几个 <code>.sh</code> 文件。它们就是我们接下来要使用的命令们。 </li>
+</ol>
+<ul>
+<li><code>format-objc-file.sh</code>：整理单个文件的命令，用法同 <code>setup-repo.sh</code> 一样，也是通过路径加载命令，然后空格加需要格式化文件的路径即可。</li>
+<li><code>format-objc-files.sh</code>：英语老师教我们，名词加 s 代表复数，所以这个命令是用来格式化多个文件的，用法同上。需要被格式化的文件路径之间用空格隔开即可。</li>
+<li><code>format-objc-files-in-repo.sh</code>：in-repo，顾名思义，就是整理整个仓库下的所有文件。这个命令建议不要一开始就使用，请阅读完 排除整理 部分之后再使用。</li>
+</ul>
+<p>说完了格式化需要用到的命令，我们暂时还不能立即使用，还要知道怎么避免某些文件不被格式化，因为现在的工程基本都会用到很多的第三方，而这些文件往往不需要再次整理。好在这些东西 <code>spacecommander</code> 都已经为我们想到了，配置起来也是相当的简单，下边会介绍到。当然你可以自己写个小 demo，或者使用<code>spacecommander</code> 目录下<code>Testing Support</code> 的测试代码进行测试。这里贴几张格式化官方例子的前后对比图吧：<img src="/images/spacecommander/inlineBefore.png" alt="行末注释前"> <img src="/images/spacecommander/inlineAfter.png" alt="行末注释后"> <img src="/images/spacecommander/blockBefore.png" alt="block前">  <img src="/images/spacecommander/blockAfter.png" alt="block后">  <img src="/images/spacecommander/dictionaryBefore.png" alt="字典前">  <img src="/images/spacecommander/dictionaryAfter.png" alt="字典后"></p>
+<h4 id="2-2-自动化整理"><a href="#2-2-自动化整理" class="headerlink" title="2.2 自动化整理"></a>2.2 自动化整理</h4><p>上边我们提到 git 钩子的问题，按照上述步骤配置完成之后，其实我们已经就已经实现了自动化整理代码的目的。试一下，修改项目中的某个文件，然后 <code>git add .</code> 之后 <code>git commit -m &quot;提交备注信息&quot;</code>，注意一定要是这两个命令，如果使用 <code>git commit -am &quot;提交备注信息&quot;</code> 的话，<code>spacecommander</code> 是无法识别要整理的文件的。正常情况下会提示<img src="/images/spacecommander/gitCommit.png" alt="gitCommit">。这就说明要提交的文件不符合代码规范的要求。接下来我们可以有两种操作：使用<code>git commit --no-verify</code>强制提交，这不是我们的重点。或者使用<code>spacecommander路径/format-objc-files.sh -s</code>先对代码进行格式化，这里的<code>-s</code>后缀参数是<code>-stage</code>的意思，是只对暂存区，也就是要提交的代码进行格式化。成功格式化之后会提示<code>Formatting complete</code>。然后我们再次运行 <code>git commit -m</code>对代码进行提交即可。</p>
+<h2 id="3-排除不想整理的代码"><a href="#3-排除不想整理的代码" class="headerlink" title="3. 排除不想整理的代码"></a>3. 排除不想整理的代码</h2><h4 id="3-1-排除不需要格式化的文件夹"><a href="#3-1-排除不需要格式化的文件夹" class="headerlink" title="3.1 排除不需要格式化的文件夹"></a>3.1 排除不需要格式化的文件夹</h4><p>默认情况下，spacecommander 已经将 <code>Pods</code> 和 <code>Carthage</code> 路径下的文件排除掉了<img src="/images/spacecommander/podIgnore.png" alt="podIgnore">所以不用担心这些文件。如果是手动拖入的第三方，我们可以在项目工程目录下，创建一个名为 <code>.formatting-directory-ignore</code> 的文件，里边写入需要忽略的文件夹路径即可。  </p>
+<h4 id="3-2-排除不需要格式化的单个文件"><a href="#3-2-排除不需要格式化的单个文件" class="headerlink" title="3.2 排除不需要格式化的单个文件"></a>3.2 排除不需要格式化的单个文件</h4><p>上边说到的是文件夹忽略，那如果是单个文件要怎么做呢？不用怕，spacecommander 也支持。我们只需在需要忽略的文件的头部，注意是最头部，添加 <code>#pragma Formatter Exempt</code> 或者<code>// MARK: Formatter Exempt</code> 即可。</p>
+<h4 id="3-3-部分代码避免格式化"><a href="#3-3-部分代码避免格式化" class="headerlink" title="3.3 部分代码避免格式化"></a>3.3 部分代码避免格式化</h4><p>同样，一个文件内的某几行代码同样也可以在整理范围之外。使用到的命令为：<code>// clang-format off</code> 和 <code>// clang-format on</code>。就像这样：<img src="/images/spacecommander/clangFormatOffOn.png" alt=""><br>3.4 bug。注册推送时的代码格式化之后老会多一个分号，像这样：<img src="/images/spacecommander/clang-formatInfile.png" alt="clang-formatBug">，我尝试使用 <code>// clang-format off</code> 依旧不好使，无奈只能手动修改，之后使用 <code>git commit --no-verify</code> 强制提交了。   </p>
+<h2 id="4-快捷键配置"><a href="#4-快捷键配置" class="headerlink" title="4. 快捷键配置"></a>4. 快捷键配置</h2><h4 id="4-1-快捷键"><a href="#4-1-快捷键" class="headerlink" title="4.1 快捷键"></a>4.1 快捷键</h4><p>如果我们每次提交代码都需要输入那么长的路径信息和命令，估计代码格式化工具使用的人也不多。幸运的是，我们可以通过一些设置来简化这些操作。这种简化是属于命令行层级的操作，我使用的是 zsh 命令行，如果你使用的是系统命令行，修改思想完全一致，只不过是文件不一样。   </p>
+<h4 id="4-2-路径快捷键"><a href="#4-2-路径快捷键" class="headerlink" title="4.2 路径快捷键"></a>4.2 路径快捷键</h4><p>zsh 命令行需要修改用户根目录下的 <code>.zshrc</code> 文件，在文件末尾输入<code>export SPACECOMMANDER=&quot;/Users/mac/Documents/spacecommander&quot;</code>，意思是使用<code>SPACECOMMANDER</code> 代表后边的路径信息。重启命令行工具，输入space之后按 <code>tab</code> 键即可自动填充<code>SPACECOMMANDER</code>。   </p>
+<h4 id="4-3-命令快捷键"><a href="#4-3-命令快捷键" class="headerlink" title="4.3 命令快捷键"></a>4.3 命令快捷键</h4><p>当然我们可以在上边路径快捷键的基础上，直接在路径快捷键的后边后缀命令，例如<code>SPACECOMMANDER format-objc-files.sh -s</code> 来对整理暂存区的代码。不过这依然不够快捷，是吧？所以我们需要使用更加方便的自定义命令快捷键。还是修改 <code>.zshrc</code> 文件，这次我们添加如下内容：<br><code>alias formatstage=&quot;/Users/mac/Documents/spacecommander/format-objc-files.sh -s&quot;</code><br><code>alias formatfile=&quot;/Users/mac/Documents/spacecommander/format-objc-file.sh&quot;</code><br><code>alias formatall=&quot;/Users/mac/Documents/spacecommander/format-objc-files-in-repo.sh&quot;</code>。<br>重启命令行工具，输入<code>format</code>之后按<code>tab</code>我们刚刚添加的三条命令就自动提示出来了。</p>
+<h2 id="5-结束语"><a href="#5-结束语" class="headerlink" title="5. 结束语"></a>5. 结束语</h2><p>至此，关于日常开发使用 spacecommander 自动化整理代码就介绍完了，配置完之后，开发的流程基本是这个样子：<br><code>修改代码 -&gt; git add . -&gt; git commit -m -&gt; formatstage -&gt; git commit -m</code><br>即可实现代码自动整理，动手试一下吧，感谢您的阅读！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+            <a href="/tags/spacecommander/" rel="tag">#spacecommander</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/01/UITextField输入过滤/" rel="next" title="UITextField输入过滤">
+                <i class="fa fa-chevron-left"></i> UITextField输入过滤
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/09/03/iOS手把手教你自动化整理代码/"
+           data-title="iOS开发之--手把手教你自动化整理代码" data-url="http://yoursite.com/2017/09/03/iOS手把手教你自动化整理代码/">
+      </div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="dalianer" />
+          <p class="site-author-name" itemprop="name">dalianer</p>
+          <p class="site-description motion-element" itemprop="description">大脸儿的成长记录</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/hexintao" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-准备工作和环境配置"><span class="nav-number">1.</span> <span class="nav-text">1. 准备工作和环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-下载源文件"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.1 下载源文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-配置"><span class="nav-number">1.0.2.</span> <span class="nav-text">1.2 配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-整理代码"><span class="nav-number">2.</span> <span class="nav-text">2. 整理代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-常用的格式化命令"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 常用的格式化命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-自动化整理"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 自动化整理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-排除不想整理的代码"><span class="nav-number">3.</span> <span class="nav-text">3. 排除不想整理的代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-排除不需要格式化的文件夹"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 排除不需要格式化的文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-排除不需要格式化的单个文件"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2 排除不需要格式化的单个文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-部分代码避免格式化"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.3 部分代码避免格式化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-快捷键配置"><span class="nav-number">4.</span> <span class="nav-text">4. 快捷键配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-快捷键"><span class="nav-number">4.0.1.</span> <span class="nav-text">4.1 快捷键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-路径快捷键"><span class="nav-number">4.0.2.</span> <span class="nav-text">4.2 路径快捷键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-命令快捷键"><span class="nav-number">4.0.3.</span> <span class="nav-text">4.3 命令快捷键</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-结束语"><span class="nav-number">5.</span> <span class="nav-text">5. 结束语</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dalianer—>You don’t change, you won’t change!</span>
+</div>
+
+<div class="powered-by">
+  由 Hexo 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+    NexT.Mist
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"dalianer"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qTC2lKnjgeMyQWqFztPA4ppN-gzGzoHsz", "CoPDrDN4NplhcYAjsrszCly9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

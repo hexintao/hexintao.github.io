@@ -4,6 +4,52 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/09/03/iOS%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E8%87%AA%E5%8A%A8%E5%8C%96%E6%95%B4%E7%90%86%E4%BB%A3%E7%A0%81/</loc>
+    <lastmod>2017-09-10T01:40:39.000Z</lastmod>
+    <data>
+        <display>
+        <title>iOS开发之--手把手教你自动化整理代码</title>
+        <pubTime>2017-09-03T02:57:23.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+        <tag>spacecommander</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS开发" url="http://yoursite.com/categories/iOS-Development/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/06/23/iOS%E8%BF%94%E5%9B%9E%E6%8C%89%E9%92%AE%E8%87%AA%E5%AE%9A%E4%B9%89/</loc>
+    <lastmod>2017-09-03T03:34:18.000Z</lastmod>
+    <data>
+        <display>
+        <title>iOS返回按钮自定义</title>
+        <pubTime>2016-06-23T04:27:22.000Z</pubTime>
+        
+        <tag>iOS</tag>
+         
+        <tag>自定义</tag>
+         
+        <tag>返回按钮</tag>
+         
+         
+           
+             
+              <breadCrumb title="iOS开发" url="http://yoursite.com/categories/iOS-Development/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/08/01/UITextField%E8%BE%93%E5%85%A5%E8%BF%87%E6%BB%A4/</loc>
     <lastmod>2016-08-01T09:53:16.000Z</lastmod>
     <data>
@@ -170,7 +216,7 @@
 
     
   <url>
-    <loc>http://yoursite.com/2016/06/08/iOS%20XML:json%E6%95%B0%E6%8D%AE%E8%A7%A3%E6%9E%90/</loc>
+    <loc>http://yoursite.com/2016/06/08/iOS-XML-json%E6%95%B0%E6%8D%AE%E8%A7%A3%E6%9E%90/</loc>
     <lastmod>2016-07-10T13:00:28.000Z</lastmod>
     <data>
         <display>
@@ -261,7 +307,7 @@
 
     
   <url>
-    <loc>http://yoursite.com/2016/05/24/nil:Nil:NULL:NSNull/</loc>
+    <loc>http://yoursite.com/2016/05/24/nil-Nil-NULL-NSNull/</loc>
     <lastmod>2016-05-27T12:35:29.000Z</lastmod>
     <data>
         <display>
