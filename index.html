@@ -253,6 +253,136 @@
             
               
                 
+                <a class="post-title-link" href="/2017/09/14/iOS-日常开发WKWebView高度问题/" itemprop="url">
+                  iOS 日常开发WKWebView高度问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-14T23:05:15+08:00" content="2017-09-14">
+              2017-09-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/14/iOS-日常开发WKWebView高度问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/14/iOS-日常开发WKWebView高度问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/14/iOS-日常开发WKWebView高度问题/" class="leancloud_visitors" data-flag-title="iOS 日常开发WKWebView高度问题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="获取高度方案1"><a href="#获取高度方案1" class="headerlink" title="获取高度方案1"></a>获取高度方案1</h3><p>网上最多的就是这个方法，设置 <code>navigationDelegate</code>，然后在 <code>webView:didFinishNavigation:</code> 方法中执行一段脚本，获取页面高度，整体像这样：</p>
+<p><img src="/images/WKWebViewHeight/WKWebViewJSHeight.jpg" alt="WKWebViewJSHeight"></p>
+<p>通过 <code>WKWebView</code> 执行脚本获取 h5 内容高度的方法中，<code>js</code> 中对应有这么几个高度：<code>scrollHeight</code>、<code>clientHeight</code> 和  <code>offsetHeight</code>，它们之间的区别，<a href="https://stackoverflow.com/questions/22675126/what-is-offsetheight-clientheight-scrollheight" target="_blank" rel="external">stackOverFlow</a> 上一张图很形象：</p>
+<p><img src="https://i.stack.imgur.com/NANud.png" alt=""><img src="https://i.stack.imgur.com/RFxSh.png" alt=""></p>
+<p>所以，我们需要获取页面的 <code>scrollHeight</code> 高度。但是这个高度有些情况下会有问题，有时候，页面加载完成并不代表页面中的所有内容都已经加载完毕，有些网页的图片使用到了懒加载的技术，只有页面滚动到图片的位置时，图片才会加载出来，而在这之前，页面上显示的是占位图。如果占位图和要加载的图片大小一致，则高度正常，内容完整显示，万事大吉。否则，如果占位图比最终显示的图片高度要高，则最后显示时，<code>WKWebView</code> 会有留白（高度被占位图撑的过大了），反之，内容则会显示不完整（获取到的高度偏小）。这里插一句，<code>WKWebView</code> 显示图片时，如果图片尺寸超过 <code>WKWebView</code> 的尺寸，<code>WKWebView</code> 会进行等比缩放进行展示。</p>
+<h3 id="获取高度方案2"><a href="#获取高度方案2" class="headerlink" title="获取高度方案2"></a>获取高度方案2</h3><p>通过 <code>KVO</code> 监听 <code>WKWebView</code> 的 <code>scrollView</code> 的 <code>contentSize</code>，这样每当页面内容发生改变时，我们都能获取到最新的页面高度。</p>
+<p><img src="/images/WKWebViewHeight/WKWebViewContentSizeHeight.jpg" alt="WKWebViewContentSizeHeight"></p>
+<p>如果 <code>WKWebView</code> 是嵌套在 <code>UITableView</code> 中，还需要注意在列表滑动的时候，应该避免 <code>WKWebView</code> 重复加载，而且高度也应该缓存起来。另外，当嵌套在 <code>UITableView</code> 中，<code>WKWebView</code> 高度更新也是比较棘手的问题。如果 <code>WKWebView</code> 是 <code>UITableView</code> 的头部视图，相对来说还简单一点，可以重新设置高度，再重新设置头部视图即可。如果是嵌套在 <code>cell</code> 中而且使用的是 <code>AutoLayout</code> 布局，在更新 <code>WKWebView</code> 的高度时，就不仅需要包含 <code>WKWebView</code> 的 <code>cell</code> 更新约束，同时父视图 <code>UITableView</code> 也需要进行视图更新。常用的方法有：</p>
+<ul>
+<li>使用 <code>beginUpdates</code> 和 <code>endUpdates</code> ；</li>
+<li>使用 <code>moveRowAtIndexPath:toIndexPath:</code>，这里前后两个 <code>NSIndexPath</code> 值一样，都是包含 <code>WKWebView</code> 的 <code>cell</code> 的 <code>indexPath</code>。</li>
+</ul>
+<p>不过，我在使用这两种方法时，都偶尔会有崩溃的问题出现，而且一般都是在数据刚加载完立马滑动视图时出现崩溃，原因也很诡异：</p>
+<pre><code class="mm">[__<span class="built_in">NSArrayM</span> objectAtIndex:]: index <span class="number">6</span> beyond bounds [<span class="number">0</span> .. <span class="number">5</span>]
+</code></pre>
+<p>提示数组越界，网上的说法比较倾向于 <code>UITableView</code> 内部的错误，真正的原因目前未知。后来暂时的优化方案是进行高度过滤，只有在监听到的高度大于某个值后才去更新 <code>UITableView</code>，能一定程度降低崩溃，但不能避免。</p>
+<h3 id="WKWebView-的页面空白问题"><a href="#WKWebView-的页面空白问题" class="headerlink" title="WKWebView 的页面空白问题"></a><code>WKWebView</code> 的页面空白问题</h3><p>关于原因，<a href="http://www.jianshu.com/p/1d739e2e7ed2" target="_blank" rel="external">这篇文章</a>说的很清楚，从界面分析到源代码，有理有据。在实际中使用时，大概有这么两点需要注意：</p>
+<ol>
+<li><code>WKWebView</code> 在设置为不可滚动时，会有出现内容空白的可能，原因大致是出于性能考量。平时使用 <code>iPhone</code> 自带的 <code>Safari</code> 浏览器，如果点击页面跳转，但新内容尚未加载时，上下滑动时就可以看到有空白。</li>
+<li>可以通过 <code>WKWebView</code> 实例调用 <code>setNeedsLayout</code> 方法来解决这个问题。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/09/03/iOS手把手教你自动化整理代码/" itemprop="url">
                   iOS开发之--手把手教你自动化整理代码
                 </a>
@@ -1392,137 +1522,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/30/iOS渐变横幅/" itemprop="url">
-                  iOS开发之——下拉刷新和渐变横幅
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-30T20:00:49+08:00" content="2016-05-30">
-              2016-05-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS-Development/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS开发</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/30/iOS渐变横幅/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/iOS渐变横幅/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/05/30/iOS渐变横幅/" class="leancloud_visitors" data-flag-title="iOS开发之——下拉刷新和渐变横幅">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>iOS中利用系统自带的属性设置渐变的横幅。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/30/iOS渐变横幅/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1567,7 +1566,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1584,7 +1583,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
